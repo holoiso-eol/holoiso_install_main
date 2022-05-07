@@ -7,7 +7,7 @@ arch=("x86_64")
 
 package() {
     holoiso_basever="SteamOS_Holo-$(date +%Y%m%d_%H%M)_amdgpu-x86_64"
-    holoiso_codename="Rub-rub, hotfix 1 (RC1)"
+    holoiso_codename="Boop (snapshot1)"
     mkdir -p "${pkgdir}/usr/bin"
     mkdir -p "${pkgdir}/etc"
     cp "${srcdir}/steamos-update" "${pkgdir}/usr/bin/steamos-update"

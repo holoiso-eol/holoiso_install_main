@@ -1,11 +1,17 @@
 #!/bin/zsh
+VERSION_LIST_PRE=$(cat /etc/os-release | grep snapshot | cut -c 12- > verinf && sed -i 's/"//g' verinf && cat verinf)
+
+if [[ "${DESKTOP_SESSION}" == "plasma" ]]; then
+        echo "HoloISO Updater Beta 1\nCurrent version: ${VERSION_LIST_PRE}\nChecking for updates..."
+fi
+
 CMD_HOLO_UPDATE=$(sudo pacman -Syyu --noconfirm --needed --ignore=linux-firmware --ignore=grub --ignore=linux --quiet | grep nothing)
 VERSION_LIST=$(cat /etc/os-release | grep snapshot | cut -c 12- > verinf && sed -i 's/"//g' verinf && cat verinf)
 
 if [[ "${CMD_HOLO_UPDATE}" == " there is nothing to do" ]]; then
     echo "Your system is up to date."
-    echo "Current version: ${VERSION_LIST}"
+    echo "Current version: ${VERSION_LIST_PRE}"
     exit 7
 else
-    echo "update complete, please restart.\nPlease save your unsaved data!\nNew version: ${VERSION_LIST}"
+    echo "Update complete to version ${VERSION_LIST}. Please restart your device to apply changes."
 fi

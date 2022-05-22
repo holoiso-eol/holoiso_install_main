@@ -1,0 +1,4 @@
+#!/bin/zsh
+echo "Disabling session switching and autologin..."
+mv /etc/sddm.conf.d/autologin.conf /home/holoiso-autologin.conf
+echo "Done!"

@@ -1,5 +1,11 @@
 #!/bin/zsh
-echo "HoloISO Recovery Mode B2"
+HOLOVER=$(cat /etc/os-release | grep snapshot20 | cut -c 12- > verinf && sed -i 's/"//g' verinf && cat verinf)
+echo "HoloISO Recovery Mode B2 on HoloISO version ${HOLOVER}"
 echo "Initializing required services in recovery mode......"
 systemctl start NetworkManager
 echo "Networking enabled. Configure your network thru [38;2;23;147;209mnmtui[0m"
+echo "Type [38;2;23;147;209mholoiso-disable-sessions[0m to disable SDDM autologin AND session switching"
+echo "Type [38;2;23;147;209mholoiso-enable-sessions[0m to enable SDDM autologin AND session switching"
+echo "Type [38;2;23;147;209msteamos-update[0m to update system"
+echo "Press [38;2;23;147;209mCTRL+D[0m to exit this shell"
+echo "Type [38;2;23;147;209mreboot[0m to reboot this device"

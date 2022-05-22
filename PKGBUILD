@@ -18,7 +18,9 @@ package() {
     cp "${srcdir}/steamos-session-select" "${pkgdir}/usr/bin/steamos-session-select"
     cp "${srcdir}/holoiso-gamescope-power" "${pkgdir}/usr/bin/holoiso-gamescope-power"
     cp "${srcdir}/holoiso-reboot-tracker" "${pkgdir}/usr/bin/holoiso-reboot-tracker"
-    cp "${srcdir}/jupiter-controller-update" "${pkgdir}/usr/bin/jupiter-controller-update"    
+    cp "${srcdir}/jupiter-controller-update" "${pkgdir}/usr/bin/jupiter-controller-update"
+    cp "${srcdir}/holoiso-disable-sessions" "${pkgdir}/usr/bin/holoiso-disable-sessions"  
+    cp "${srcdir}/holoiso-enable-sessions" "${pkgdir}/usr/bin/holoiso-enable-sessions"      
     cp "${srcdir}/recoveryinit" "${pkgdir}/usr/bin/recoveryinit"      
     cp "${srcdir}/osinfo" "${srcdir}/osinfo_tmp"
     cp "${srcdir}/pacman.conf" "${pkgdir}/etc/pacman.conf"
@@ -32,6 +34,8 @@ package() {
     chmod +x "${pkgdir}/usr/bin/recoveryinit"  
     chmod +x "${pkgdir}/usr/bin/holoiso-reboot-tracker" 
     chmod +x "${pkgdir}/usr/bin/holoiso-gamescope-power"
+    chmod +x "${pkgdir}/usr/bin/holoiso-disable-sessions"
+    chmod +x "${pkgdir}/usr/bin/holoiso-enable-sessions"
     chmod 0644 "${pkgdir}/usr/lib/systemd/system/holoiso-reboot-tracker.service"
 }
 

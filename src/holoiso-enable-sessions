@@ -1,0 +1,4 @@
+#!/bin/zsh
+echo "Enabling session switching and autologin..."
+mv /home/holoiso-autologin.conf /etc/sddm.conf.d/autologin.conf
+echo "Done!"

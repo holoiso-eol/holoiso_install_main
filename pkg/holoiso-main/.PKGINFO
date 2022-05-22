@@ -2,12 +2,12 @@
 # using fakeroot version 1.27
 pkgname = holoiso-main
 pkgbase = holoiso-main
-pkgver = snapshot20220522.1516-1
+pkgver = snapshot20220522.1642-1
 pkgdesc = HoloISO base installation
 url = 
-builddate = 1653221775
+builddate = 1653226963
 packager = Unknown Packager
-size = 5958
+size = 5961
 arch = x86_64
 depend = archlinux-keyring
 depend = ark

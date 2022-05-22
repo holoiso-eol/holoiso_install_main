@@ -1,11 +1,11 @@
 format = 2
 pkgname = holoiso-main
 pkgbase = holoiso-main
-pkgver = snapshot20220521.1410-1
+pkgver = snapshot20220521.1730-1
 pkgarch = x86_64
-pkgbuild_sha256sum = ae938d40886c509103040f3177fd231e83e365f86a7771e5b724a6cef7b6e041
+pkgbuild_sha256sum = 7469874af33543a4dbc53e57aa7d38c57301cea51c8f73d7b7e0f04e146760d8
 packager = Unknown Packager
-builddate = 1653131421
+builddate = 1653143432
 builddir = /home/holo/ISOBuilding/holoiso_install_main
 startdir = /home/holo/ISOBuilding/holoiso_install_main
 buildtool = makepkg

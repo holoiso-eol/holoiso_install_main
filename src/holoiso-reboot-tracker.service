@@ -1,0 +1,15 @@
+[Unit]
+Description=HoloISO Reboot tracking service
+After=display-manager.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/holoiso-reboot-tracker
+
+# Fail if we cannot update within 240 seconds.
+TimeoutStartSec=140
+TimeoutStopSec=10
+Restart=yes
+
+[Install]
+WantedBy=multi-user.target

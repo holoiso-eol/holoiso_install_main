@@ -1,5 +1,5 @@
 #!/bin/zsh
-echo "HoloISO Recovery Mode B1"
+echo "HoloISO Recovery Mode"
 echo "Initializing required services in recovery mode......"
 systemctl start NetworkManager
 echo "Networking enabled. Configure your network thru [38;2;23;147;209mnmtui[0m"

@@ -10,5 +10,5 @@ SUPPORT_URL="https://support.steampowered.com/"
 BUG_REPORT_URL="https://support.steampowered.com/"
 LOGO=steamos
 VERSION_ID="Lord Gaben's treasure (snapshot2)"
-VARIANT_ID="snapshot20220521.1730"
-BUILD_ID="SteamOS_Holo-20220521_1730_amdgpu-x86_64"
+VARIANT_ID="snapshot20220522.1516"
+BUILD_ID="SteamOS_Holo-20220522_1516_amdgpu-x86_64"

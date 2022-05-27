@@ -1,0 +1,25 @@
+name: Build snapshot
+on: [push, pull_request]
+
+jobs:
+  test-run:
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux
+      options: --privileged
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Arch Linux package
+        uses: ./
+        with:
+          BUILD_SCRIPT: extra-x86_64-build
+          PKGBUILD: $GITHUB_WORKSPACE/.github/workflows/PKGBUILD
+          OUTDIR: $HOME/arch-packages
+      - name: Build the package again
+        uses: ./
+        with:
+          BUILD_SCRIPT: extra-x86_64-build
+          PKGBUILD: $GITHUB_WORKSPACE/.github/workflows/PKGBUILD
+          OUTDIR: $HOME/arch-packages2

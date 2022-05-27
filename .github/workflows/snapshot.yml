@@ -15,7 +15,7 @@ jobs:
       - name: Prepare pacman keyring
         run: |
           pacman-key --init
-          pacman --noconfirm -Sy archlinux-keyring
+          pacman --noconfirm -Sy archlinux-keyring base-devel fakeroot
           chown nobody:nobody "/__w/holoiso_install_main/holoiso_install_main"
           
       - name: Build ISO File

@@ -16,10 +16,11 @@ jobs:
         run: |
           pacman-key --init
           pacman --noconfirm -Sy archlinux-keyring
+          chown nobody:nobody "/__w/holoiso_install_main/holoiso_install_main"
           
       - name: Build ISO File
         run: |
-          su -s /bin/bash nobody -c "chown nobody:nobody "/__w/holoiso_install_main/holoiso_install_main" && mkdir pkgout && export BUILDDIR=pkgout && makepkg -s"
+          su -s /bin/bash nobody -c "mkdir pkgout && export BUILDDIR=pkgout && makepkg -s"
 
       - uses: actions/upload-artifact@v2
         with:

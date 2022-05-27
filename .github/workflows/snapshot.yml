@@ -20,7 +20,7 @@ jobs:
           
       - name: Build ISO File
         run: |
-          su -s /bin/bash nobody -c "mkdir pkgout && export BUILDDIR=pkgout && makepkg -s"
+          su -s /bin/bash nobody -c "mkdir pkgout && export BUILDDIR=pkgout && makepkg -s --nodeps"
 
       - uses: actions/upload-artifact@v2
         with:

@@ -19,7 +19,7 @@ jobs:
           
       - name: Build ISO File
         run: |
-          su nobody -c "makepkg -s"
+          su -s /bin/bash nobody -c "makepkg -s"
 
       - uses: actions/upload-artifact@v2
         with:

@@ -17,6 +17,7 @@ jobs:
           pacman-key --init
           pacman --noconfirm -Sy archlinux-keyring base-devel fakeroot
           chown -R nobody:nobody "/__w/holoiso_install_main/holoiso_install_main"
+          rm /__w/holoiso_install_main/holoiso_install_main/*.tar.zst
           
       - name: Build ISO File
         run: |

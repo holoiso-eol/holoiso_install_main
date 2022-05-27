@@ -19,9 +19,9 @@ jobs:
           
       - name: Build ISO File
         run: |
-          su -s /bin/bash nobody -c "makepkg -s"
+          su -s /bin/bash nobody -c "mkdir pkgout && export BUILDDIR=pkgout && makepkg -s"
 
       - uses: actions/upload-artifact@v2
         with:
           name: holoiso
-          path: holoiso*.tar.zst
+          path: pkgout/*.tar.zst

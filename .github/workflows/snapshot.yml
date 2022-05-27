@@ -2,15 +2,14 @@ name: Build snapshot
 on: [push, pull_request]
 
 jobs:
-  test-run:
+  build:
     runs-on: ubuntu-latest
     container:
-      image: archlinux
+      image: archlinux:latest
       options: --privileged
-      volumes:
-        - /sys/fs/cgroup:/sys/fs/cgroup
     steps:
       - uses: actions/checkout@v2
+      
       - name: Build Arch Linux package
         uses: ./
         with:

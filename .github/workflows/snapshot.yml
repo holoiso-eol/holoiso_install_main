@@ -1,5 +1,7 @@
 name: Build snapshot
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
 
 jobs:
   build:
@@ -10,15 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Build Arch Linux package
-        uses: ./
+      - name: Prepare pacman keyring
+        run: |
+          pacman-key --init
+          pacman --noconfirm -Sy archlinux-keyring
+          
+      - name: Build ISO File
+        run: |
+          makepkg -s
+
+      - uses: actions/upload-artifact@v2
         with:
-          BUILD_SCRIPT: extra-x86_64-build
-          PKGBUILD: $GITHUB_WORKSPACE/.github/workflows/PKGBUILD
-          OUTDIR: $HOME/arch-packages
-      - name: Build the package again
-        uses: ./
-        with:
-          BUILD_SCRIPT: extra-x86_64-build
-          PKGBUILD: $GITHUB_WORKSPACE/.github/workflows/PKGBUILD
-          OUTDIR: $HOME/arch-packages2
+          name: holoiso
+          path: *.tar.zst

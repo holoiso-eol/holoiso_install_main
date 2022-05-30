@@ -6,7 +6,7 @@ depends=('archlinux-keyring' 'ark' 'cheese' 'chromium' 'cups' 'curl' 'dolphin' '
 arch=("x86_64")
 
 package() {
-    holoiso_basever="SteamOS_Holo-$(date +%Y%m%d_%H%M)_amdgpu-x86_64"
+    holoiso_basever="SteamOS_Holo-$(date +%Y%m%d_%H%M)_Stable-x86_64"
     holoiso_codename="Lord Gaben's treasure (snapshot2)"
     mkdir -p "${pkgdir}/usr/bin"
     mkdir -p "${pkgdir}/etc"

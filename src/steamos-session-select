@@ -9,7 +9,7 @@ if [[ "${DESKTOP_SESSION}" == "plasma" ]]; then
            
 elif [[ "${DESKTOP_SESSION}" == "gamescope-wayland" ]]; then
         sudo pkexec sed -i 's/gamescope-wayland/plasma/g' /etc/sddm.conf.d/autologin.conf
-        sudo systemctl reset-failed sddm && sudo systemctl restart sddm && touch /tmp/steamos-sessionselect-sentinel
+        sudo systemctl reset-failed sddm && touch /tmp/steamos-sessionselect-sentinel && sudo systemctl restart sddm
 else
 	echo "Are you running SteamOS on KDE Plasma or SteamOS Session?"
 fi

@@ -15,15 +15,27 @@ jobs:
       - name: Prepare pacman keyring
         run: |
           pacman-key --init
-          pacman --noconfirm -Sy archlinux-keyring base-devel fakeroot
-          chown -R nobody:nobody "/__w/holoiso_install_main/holoiso_install_main"
-          rm /__w/holoiso_install_main/holoiso_install_main/*.tar.zst
+          pacman --noconfirm -Sy archlinux-keyring base-devel fakeroot wget
+          chown -R nobody:nobody .
+          rm *.tar.zst
           
-      - name: Build ISO File
+      - name: Build Arch package
         run: |
           su -s /bin/bash nobody -c "makepkg -s --nodeps && mkdir pkgout && mv *.tar.zst pkgout"
+          
+      - name: Add to arch repository
+        run: |
+          su -s /bin/bash nobody -c "wget https://vakdl.enablers.workers.dev/6:/holoiso/os/x86_64/holoiso.db -P pkgout"
+          su -s /bin/bash nobody -c "wget https://vakdl.enablers.workers.dev/6:/holoiso/os/x86_64/holoiso.db.tar.gz -P pkgout"
+          su -s /bin/bash nobody -c "wget https://vakdl.enablers.workers.dev/6:/holoiso/os/x86_64/holoiso.db.tar.gz.old -P pkgout"
+          su -s /bin/bash nobody -c "wget https://vakdl.enablers.workers.dev/6:/holoiso/os/x86_64/holoiso.db.tar.xz -P pkgout"
+          su -s /bin/bash nobody -c "wget https://vakdl.enablers.workers.dev/6:/holoiso/os/x86_64/holoiso.files -P pkgout"
+          su -s /bin/bash nobody -c "wget https://vakdl.enablers.workers.dev/6:/holoiso/os/x86_64/holoiso.files.tar.gz -P pkgout"
+          su -s /bin/bash nobody -c "wget https://vakdl.enablers.workers.dev/6:/holoiso/os/x86_64/holoiso.files.tar.gz.old -P pkgout"
+          su -s /bin/bash nobody -c "wget https://vakdl.enablers.workers.dev/6:/holoiso/os/x86_64/holoiso.files.tar.xz -P pkgout"
+          su -s /bin/bash nobody -c "repo-add pkgout/holoiso.db.tar.gz pkgout/*.tar.zst"
 
       - uses: actions/upload-artifact@v2
         with:
-          name: holoiso
-          path: pkgout/*.tar.zst
+          name: package
+          path: pkgout/*

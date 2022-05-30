@@ -4,7 +4,7 @@
 export STEAMOS_STEAM_REBOOT_SENTINEL="/tmp/steamos-reboot-sentinel"
 if [[ -e "$STEAMOS_STEAM_REBOOT_SENTINEL" ]]; then
 	rm -f "$STEAMOS_STEAM_REBOOT_SENTINEL"
-	sleep 2
+	sleep 5
 	/usr/bin/steamos-polkit-helpers/steamos-reboot-now
 	sudo pkill -f "gamesc*" && sudo systemctl reboot
 fi
@@ -14,7 +14,7 @@ fi
 export STEAMOS_STEAM_SHUTDOWN_SENTINEL="/tmp/steamos-shutdown-sentinel"
 if [[ -e "$STEAMOS_STEAM_SHUTDOWN_SENTINEL" ]]; then
 	rm -f "$STEAMOS_STEAM_SHUTDOWN_SENTINEL"
-	sleep 2
+	sleep 5
 	/usr/bin/steamos-polkit-helpers/steamos-poweroff-now
 	sudo pkill -f "gamesc*" && sudo systemctl poweroff
 fi

@@ -18,3 +18,11 @@ if [[ -e "$STEAMOS_STEAM_SHUTDOWN_SENTINEL" ]]; then
 	/usr/bin/steamos-polkit-helpers/steamos-poweroff-now
 	sudo pkill -f "gamesc*" && sudo systemctl poweroff
 fi
+
+# Workaround for gamescope session being persistent
+export STEAMOS_STEAM_SESSIONSELECT_SENTINEL="/tmp/steamos-sessionselect-sentinel"
+if [[ -e "$STEAMOS_STEAM_SESSIONSELECT_SENTINEL" ]]; then
+	rm -f "$STEAMOS_STEAM_SESSIONSELECT_SENTINEL"
+	sleep 4
+	sudo pkexec sed -i 's/plasma/gamescope-wayland/g' /etc/sddm.conf.d/autologin.conf
+fi

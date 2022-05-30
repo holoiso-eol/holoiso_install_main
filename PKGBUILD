@@ -36,5 +36,7 @@ package() {
     chmod +x "${pkgdir}/usr/bin/holoiso-disable-sessions"
     chmod +x "${pkgdir}/usr/bin/holoiso-enable-sessions"
     chmod 0644 "${pkgdir}/usr/lib/systemd/system/holoiso-reboot-tracker.service"
+    echo "Release output:"
+    cat "${pkgdir}/etc/os-release"
 }
 

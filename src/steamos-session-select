@@ -1,18 +1,15 @@
 #!/bin/zsh
-# Requires Wayland SDDM to function
+# Requires Wayland SDDM and HoloISO Sentinel tracker to function
 
 if [[ "${DESKTOP_SESSION}" == "plasma" ]]; then
 	echo "Preparing to switch to Gamemode in 2 seconds..."
-	sleep 2
+	sleep 1
         sudo pkexec sed -i 's/plasma/gamescope-wayland/g' /etc/sddm.conf.d/autologin.conf
         sudo pkill -f "startplasma-x11*" && sudo systemctl reset-failed sddm && sudo systemctl restart sddm
            
 elif [[ "${DESKTOP_SESSION}" == "gamescope-wayland" ]]; then
         sudo pkexec sed -i 's/gamescope-wayland/plasma/g' /etc/sddm.conf.d/autologin.conf
-        sudo systemctl reset-failed sddm && sudo systemctl restart sddm
-        sleep 1
-        sudo pkexec sed -i 's/plasma/gamescope-wayland/g' /etc/sddm.conf.d/autologin.conf
-        sudo pkill -f "gamescope*"
+        sudo systemctl reset-failed sddm && sudo systemctl restart sddm && touch /tmp/steamos-sessionselect-sentinel
 else
 	echo "Are you running SteamOS on KDE Plasma or SteamOS Session?"
 fi

@@ -15,7 +15,8 @@ jobs:
       - name: Prepare pacman keyring
         run: |
           pacman-key --init
-          pacman --noconfirm -Sy archlinux-keyring base-devel fakeroot wget
+          pacman --noconfirm -Sy archlinux-keyring base-devel fakeroot dos2unix wget
+          dos2unix * 
           chown -R nobody:nobody .
           
       - name: Build Arch package

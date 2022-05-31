@@ -1,5 +1,4 @@
 #!/bin/zsh
-
 echo "Usage: steamos-select-branch <-c|-l|rel|beta>" 1>&2
 BRANCH_LOCAL=$(cat /etc/holoiso-branch)
 
@@ -15,7 +14,8 @@ selectbeta() {
   else
     echo "Unknown branch ${BRANCH_LOCAL}."
   fi
-  
+}
+
 selectstable() {
   if [[ "${BRANCH_LOCAL}" == "rel" ]]; then
     echo "Already in branch release"
@@ -28,6 +28,7 @@ selectstable() {
   else
     echo "Unknown branch ${BRANCH_LOCAL}. Try again later."
   fi
+}
 
 if [[ "$#" = 1 ]]; then
     case "$1" in

@@ -1,5 +1,4 @@
 #!/bin/zsh
-echo "Usage: steamos-select-branch <-c|-l|rel|beta>" 1>&2
 BRANCH_LOCAL=$(cat /etc/holoiso-branch)
 
 selectbeta() {

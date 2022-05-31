@@ -1,0 +1,59 @@
+#!/bin/zsh
+# Hopefully this is reliable enough uwu
+echo "Usage: steamos-select-branch <-c|-l|rel|beta>" 1>&2
+BRANCH_LOCAL=$(cat /etc/holoiso-branch)
+
+selectbeta() {
+  if [[ "${BRANCH_LOCAL}" == "beta" ]]; then
+    echo "Already in branch beta"
+  elif [[ "${BRANCH_LOCAL}" == "rel" ]]; then
+    echo "Switching to branch beta...."
+    sudo pkexec sed -i 's/rel/beta/g' /etc/holoiso-branch
+    sudo mv /etc/pacman.conf /etc/stable_pacman.conf
+    sudo mv /etc/beta_pacman.conf /etc/pacman.conf
+    echo "Switched to branch beta!"
+  else
+    echo "Unknown branch ${BRANCH_LOCAL}."
+  fi
+  
+selectstable() {
+  if [[ "${BRANCH_LOCAL}" == "rel" ]]; then
+    echo "Already in branch release"
+  elif [[ "${BRANCH_LOCAL}" == "beta" ]]; then
+    echo "Switching to branch release...."
+    sudo pkexec sed -i 's/beta/rel/g' /etc/holoiso-branch
+    sudo mv /etc/pacman.conf /etc/beta_pacman.conf
+    sudo mv /etc/stable_pacman.conf /etc/pacman.conf
+    echo "Switched to branch release!"
+  else
+    echo "Unknown branch ${BRANCH_LOCAL}. Try again later."
+  fi
+
+if [[ "$#" = 1 ]]; then
+    case "$1" in
+    "-c")
+      branch=$(cat /etc/holoiso-branch)
+      case "$branch" in
+        "rel" | "beta")
+          echo "$branch"
+          exit 0
+          ;;
+        *)
+          echo "unknown branch name in os-release: $branch" 1>&2
+          exit 1
+          ;;
+      esac
+      ;;
+    "beta")
+        selectbeta
+        ;;
+    "rel")
+        selectstable
+        ;;
+    "-l")
+        echo rel
+        echo beta
+        exit 0
+        ;;
+    esac
+fi

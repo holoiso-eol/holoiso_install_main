@@ -26,7 +26,7 @@ package() {
     cp "${srcdir}/pacman.conf" "${pkgdir}/etc/pacman.conf"
     cp "${srcdir}/beta_pacman.conf" "${pkgdir}/etc/beta_pacman.conf"
     sed -i "s/snapshotver/snapshot$(date +%Y%m%d.%H%M)/g" osinfo_tmp
-    sed -i "s/versionver/SteamOS 3.2 (steamdeck-main)/g" osinfo_tmp
+    sed -i "s/versionver/3.2 (steamdeck-main)/g" osinfo_tmp
     sed -i "s/buildver/${holoiso_codename}/g" osinfo_tmp
     cp "${srcdir}/osinfo_tmp" "${pkgdir}/etc/os-release"
     rm "${srcdir}/osinfo_tmp"

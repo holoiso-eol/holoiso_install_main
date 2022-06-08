@@ -1,15 +1,53 @@
 #!/bin/zsh
 # Requires Wayland SDDM and HoloISO Sentinel tracker to function
-
-if [[ "${DESKTOP_SESSION}" == "plasma" ]]; then
-	echo "Preparing to switch to Gamemode in 2 seconds..."
-	sleep 1
-        sudo pkexec sed -i 's/plasma/gamescope-wayland/g' /etc/sddm.conf.d/autologin.conf
+switchtogamescope() {
+        sudo pkexec sed -i "s/${DESKTOP_SESSION}/gamescope-wayland/g" /etc/sddm.conf.d/autologin.conf
         sudo pkill -f "startplasma-x11*" && sudo systemctl reset-failed sddm && sudo systemctl restart sddm
+}
            
-elif [[ "${DESKTOP_SESSION}" == "gamescope-wayland" ]]; then
-        sudo pkexec sed -i 's/gamescope-wayland/plasma/g' /etc/sddm.conf.d/autologin.conf
+switchtodesktop() {
+        sudo pkexec sed -i "s/${DESKTOP_SESSION}/plasma/g" /etc/sddm.conf.d/autologin.conf
         sudo systemctl reset-failed sddm && touch /tmp/steamos-sessionselect-sentinel && sudo systemctl restart sddm
+}
+
+persistentdesktop() {
+        sudo sed -i "s/gamescope-wayland/plasma/g;s/steamos/plasma/g" /etc/sddm.conf.d/autologin.conf
+        sudo reboot
+}
+
+#disableswitching() {
+#        sudo mv /etc/sddm.conf.d/autologin.conf /home/autologin.bak
+#        sudo systemctl reset-failed sddm && sudo systemctl restart sddm
+#}
+
+#enableswitching() {
+#        sudo mv /home/autologin.bak /etc/sddm.conf.d/autologin.conf
+#        sudo systemctl reset-failed sddm && sudo systemctl restart sddm
+#}
+
+if [ -n "$1" ]; then
+    case "$1" in
+    plasma)
+        switchtodesktop
+        ;;
+    gamescope)
+        switchtogamescope
+        ;;
+    plasma-persistent)
+        persistentdesktop
+        ;;
+    # disable-switching)
+    #    disableswitching
+    #    ;;
+    # enable-switching)
+    #     enableswitching
+    #     ;;
+    esac
 else
-	echo "Are you running SteamOS on KDE Plasma or SteamOS Session?"
+    echo "SteamOS Session Selection"
+    echo "plasma - Switch to KDE Plasma desktop"
+    echo "gamescope - Switch to DeckUI Gamemode"
+    echo "plasma-persistent - Switch to KDE Plasma session persistently"
+    # echo "disable-switching - Disable session switching and autologin"
+    # echo "enable-switching - Enable session switching and autologin"
 fi

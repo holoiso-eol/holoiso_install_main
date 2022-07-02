@@ -1,5 +1,12 @@
 #!/bin/zsh
 # Requires Wayland SDDM and HoloISO Sentinel tracker to function
+
+if [[ "${DESKTOP_SESSION}" == "plasma" ]]; then
+	echo "Preparing to switch to Gamemode in 2 seconds..."
+        sudo pkexec sed -i "s/${DESKTOP_SESSION}/gamescope-wayland/g" /etc/sddm.conf.d/autologin.conf
+        sudo pkill -f "startplasma-x11*" && sudo systemctl reset-failed sddm && sudo systemctl restart sddm
+fi
+
 switchtogamescope() {
         sudo pkexec sed -i "s/${DESKTOP_SESSION}/gamescope-wayland/g" /etc/sddm.conf.d/autologin.conf
         sudo pkill -f "startplasma-x11*" && sudo systemctl reset-failed sddm && sudo systemctl restart sddm

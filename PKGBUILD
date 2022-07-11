@@ -6,7 +6,7 @@ depends=('archlinux-keyring' 'ark' 'cheese' 'chromium' 'cups' 'curl' 'dolphin' '
 arch=("x86_64")
 
 package() {
-    holoiso_codename="Next (snapshot1)"
+    holoiso_codename="Stable ($(echo $RANDOM | md5sum | head -c 10; echo;))"
     mkdir -p "${pkgdir}/usr/bin"
     mkdir -p "${pkgdir}/etc"
     mkdir -p "${pkgdir}/etc/udev"    

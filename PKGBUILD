@@ -11,7 +11,9 @@ package() {
     mkdir -p "${pkgdir}/etc"
     mkdir -p "${pkgdir}/etc/udev"    
     mkdir -p "${pkgdir}/etc/udev/rules.d"    
-    mkdir -p "${pkgdir}/usr/lib/systemd/system" 
+    mkdir -p "${pkgdir}/usr/lib/systemd/system"
+    mkdir -p "${pkgdir}/etc/skel/Desktop" 
+    mkdir -p "${pkgdir}/etc/xdg/autostart"
     cp "${srcdir}/99-oxpgamepad.rules" "${pkgdir}/etc/udev/rules.d/99-oxpgamepad.rules" 
     cp "${srcdir}/holoiso-reboot-tracker.service" "${pkgdir}/usr/lib/systemd/system/holoiso-reboot-tracker.service"       
     cp "${srcdir}/steamos-session-select" "${pkgdir}/usr/bin/steamos-session-select"
@@ -25,6 +27,9 @@ package() {
     cp "${srcdir}/osinfo" "${srcdir}/osinfo_tmp"
     cp "${srcdir}/pacman.conf" "${pkgdir}/etc/pacman.conf"
     cp "${srcdir}/beta_pacman.conf" "${pkgdir}/etc/beta_pacman.conf"
+    cp "${srcdir}/steamos-gamemode.desktop" "${pkgdir}/etc/skel/Desktop/steamos-gamemode.desktop"
+    cp "${srcdir}/desktopshortcuts.desktop" "${pkgdir}/etc/xdg/autostart/desktopshortcuts.desktop"
+    cp "${srcdir}/holoiso-firstboot-config" "${pkgdir}/usr/bin/holoiso-firstboot-config"
     sed -i "s/snapshotver/snapshot$(date +%Y%m%d.%H%M)/g" osinfo_tmp
     sed -i "s/versionver/3.2 (steamdeck-main)/g" osinfo_tmp
     sed -i "s/buildver/${holoiso_codename}/g" osinfo_tmp
@@ -39,6 +44,8 @@ package() {
     chmod +x "${pkgdir}/usr/bin/holoiso-disable-sessions"
     chmod +x "${pkgdir}/usr/bin/steamos-select-branch"
     chmod +x "${pkgdir}/usr/bin/holoiso-enable-sessions"
+    chmod +x "${pkgdir}/etc/skel/Desktop/steamos-gamemode.desktop"
+    chmod +x "${pkgdir}/etc/xdg/autostart/desktopshortcuts.desktop"
     chmod 0644 "${pkgdir}/usr/lib/systemd/system/holoiso-reboot-tracker.service"
     echo "Release output:"
     cat "${pkgdir}/etc/os-release"

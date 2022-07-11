@@ -46,6 +46,7 @@ package() {
     chmod +x "${pkgdir}/usr/bin/holoiso-enable-sessions"
     chmod +x "${pkgdir}/etc/skel/Desktop/steamos-gamemode.desktop"
     chmod +x "${pkgdir}/etc/xdg/autostart/desktopshortcuts.desktop"
+    chmod +x "${pkgdir}/usr/bin/holoiso-firstboot-config"
     chmod 0644 "${pkgdir}/usr/lib/systemd/system/holoiso-reboot-tracker.service"
     echo "Release output:"
     cat "${pkgdir}/etc/os-release"

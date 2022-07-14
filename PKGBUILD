@@ -31,7 +31,7 @@ package() {
     cp "${srcdir}/desktopshortcuts.desktop" "${pkgdir}/etc/xdg/autostart/desktopshortcuts.desktop"
     cp "${srcdir}/holoiso-firstboot-config" "${pkgdir}/usr/bin/holoiso-firstboot-config"
     sed -i "s/snapshotver/snapshot$(date +%Y%m%d.%H%M)/g" osinfo_tmp
-    sed -i "s/versionver/3.2 (steamdeck-main)/g" osinfo_tmp
+    sed -i "s/versionver/3.3/g" osinfo_tmp
     sed -i "s/buildver/${holoiso_codename}/g" osinfo_tmp
     cp "${srcdir}/osinfo_tmp" "${pkgdir}/etc/os-release"
     rm "${srcdir}/osinfo_tmp"

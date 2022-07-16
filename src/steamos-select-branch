@@ -34,7 +34,7 @@ if [[ "$#" = 1 ]]; then
     "-c")
       branch=$(cat /etc/holoiso-branch)
       case "$branch" in
-        "rel" | "beta")
+        "rel")
           echo "$branch"
           exit 0
           ;;
@@ -44,15 +44,15 @@ if [[ "$#" = 1 ]]; then
           ;;
       esac
       ;;
-    "beta")
-        selectbeta
-        ;;
+    #"beta")
+      #  selectbeta
+      #  ;;
     "rel")
         selectstable
         ;;
     "-l")
         echo rel
-        echo beta
+        # echo beta
         exit 0
         ;;
     esac

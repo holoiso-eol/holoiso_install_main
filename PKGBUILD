@@ -2,7 +2,7 @@ pkgname=holoiso-main
 pkgver="snapshot$(date +%Y%m%d.%H%M)"
 pkgdesc="HoloISO base installation"
 pkgrel="1"
-depends=('archlinux-keyring' 'ark' 'cheese' 'chromium' 'cups' 'curl' 'dolphin' 'ffmpegthumbs' 'gamescope' 'git' 'glxinfo' 'go' 'gwenview' 'hunspell' 'hunspell-en_us' 'jupiter-hw-support' 'kdegraphics-thumbnailers' 'konsole' 'kwrite' 'lib32-pipewire' 'lib32-pipewire-jack' 'lib32-pipewire-v4l2' 'lib32-vulkan-radeon' 'mangohud' 'holoiso-updateclient' 'noto-fonts-cjk' 'pipewire' 'pipewire-alsa' 'pipewire-jack' 'wireplumber' 'pipewire-pulse' 'pipewire-v4l2' 'plasma-meta' 'plasma-nm' 'print-manager' 'spectacle' 'steam-jupiter-stable' 'steamdeck-kde-presets' 'tar' 'ufw' 'vlc' 'vulkan-radeon' 'yay' 'wget' 'zsh' 'xbindkeys')
+depends=('archlinux-keyring' 'ark' 'cheese' 'cups' 'curl' 'dolphin' 'ffmpegthumbs' 'gamescope' 'git' 'glxinfo' 'go' 'gwenview' 'hunspell' 'hunspell-en_us' 'jupiter-hw-support' 'kdegraphics-thumbnailers' 'konsole' 'kwrite' 'lib32-pipewire' 'lib32-pipewire-jack' 'lib32-pipewire-v4l2' 'lib32-vulkan-radeon' 'mangohud' 'holoiso-updateclient' 'noto-fonts-cjk' 'pipewire' 'pipewire-alsa' 'pipewire-jack' 'wireplumber' 'pipewire-pulse' 'pipewire-v4l2' 'plasma-meta' 'plasma-nm' 'print-manager' 'spectacle' 'steam-jupiter-stable' 'steamdeck-kde-presets' 'tar' 'ufw' 'vlc' 'vulkan-radeon' 'yay' 'wget' 'zsh' 'xbindkeys')
 arch=("x86_64")
 
 package() {
@@ -21,6 +21,7 @@ package() {
     cp "${srcdir}/steamos-session-select" "${pkgdir}/usr/bin/steamos-session-select"
     cp "${srcdir}/holoiso-gamescope-power" "${pkgdir}/usr/bin/holoiso-gamescope-power"
     cp "${srcdir}/holoiso-reboot-tracker" "${pkgdir}/usr/bin/holoiso-reboot-tracker"
+    cp "${srcdir}/holoiso-desktop-orientation" "${pkgdir}/usr/bin/holoiso-desktop-orientation"
     cp "${srcdir}/steamos-select-branch" "${pkgdir}/usr/bin/steamos-select-branch"
     cp "${srcdir}/jupiter-controller-update" "${pkgdir}/usr/bin/jupiter-controller-update"
     cp "${srcdir}/holoiso-disable-sessions" "${pkgdir}/usr/bin/holoiso-disable-sessions"  
@@ -52,7 +53,8 @@ package() {
     chmod +x "${pkgdir}/etc/xdg/autostart/desktopshortcuts.desktop"
     chmod +x "${pkgdir}/usr/bin/holoiso-firstboot-config"
     chmod +x "${pkgdir}/usr/bin/steamos-polkit-helpers/steamos-priv-write"
-    chmod 0644 "${pkgdir}/usr/lib/systemd/system/holoiso-reboot-tracker.service"
+    chmod +x "${pkgdir}/usr/bin/steamos-polkit-helpers/steamos-priv-write"
+    chmod 0644 "${pkgdir}/usr/bin/holoiso-desktop-orientation"
     echo "Release output:"
     cat "${pkgdir}/etc/os-release"
 }

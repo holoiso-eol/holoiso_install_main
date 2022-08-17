@@ -1,0 +1,21 @@
+#!/bin/bash
+# Win600 and others screen orientation
+# Read WMID here
+DEVICENAME=$(cat /sys/devices/virtual/dmi/id/product_name)
+
+# OXP Devices
+OXP_LIST="ONE XPLAYER:ONEXPLAYER 1 T08:ONEXPLAYER 1S A08:ONEXPLAYER 1S T08:ONEXPLAYER mini A07:ONEXPLAYER mini GA72:ONEXPLAYER mini GT72:ONEXPLAYER GUNDAM GA72:ONEXPLAYER 2 ARP23"
+
+# AYANEO AIR Devices
+AIR_LIST="AIR:AIR Pro"
+
+# Rotate screens here
+if [ "${DEVICENAME}" == "Win600" ] || [ "${DEVICENAME}" == "Anbernic Win600" ]; then
+    xrandr --output eDP-1 --rotate right
+elif [ "${DEVICENAME}" == "Jupiter 1" ] || [ "${DEVICENAME}" == "Valve Jupiter 1" ]; then
+    xrandr --output eDP-1 --rotate right
+elif [[ ":$OXP_LIST:" =~ ":$DEVICENAME:"  ]]; then
+    xrandr --output eDP-1 --rotate left
+elif [[ ":$AIR_LIST:" =~ ":$DEVICENAME:"  ]]; then
+    xrandr --output eDP-1 --rotate left
+fi

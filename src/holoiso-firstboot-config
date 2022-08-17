@@ -14,7 +14,4 @@ sudo chmod +x /home/$USER/Desktop/steam.desktop
 sudo chmod +x /home/$USER/Desktop/steamos-gamemode.desktop
 
 # Win600 and others screen orientation
-IS_WIN600=$(cat /sys/devices/virtual/dmi/id/product_name | grep Win600)
-if [ -n "${IS_WIN600}" ]; then
-    xrandr --output eDP-1 --rotate right
-fi
+sudo holoiso-desktop-orientation

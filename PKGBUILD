@@ -53,8 +53,8 @@ package() {
     chmod +x "${pkgdir}/etc/xdg/autostart/desktopshortcuts.desktop"
     chmod +x "${pkgdir}/usr/bin/holoiso-firstboot-config"
     chmod +x "${pkgdir}/usr/bin/steamos-polkit-helpers/steamos-priv-write"
-    chmod +x "${pkgdir}/usr/bin/steamos-polkit-helpers/steamos-priv-write"
-    chmod 0644 "${pkgdir}/usr/bin/holoiso-desktop-orientation"
+    chmod 0644 "${pkgdir}/usr/lib/systemd/system/holoiso-reboot-tracker.service"
+    chmod +x "${pkgdir}/usr/bin/holoiso-desktop-orientation"
     echo "Release output:"
     cat "${pkgdir}/etc/os-release"
 }

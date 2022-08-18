@@ -24,6 +24,7 @@ package() {
     cp "${srcdir}/holoiso-desktop-orientation" "${pkgdir}/usr/bin/holoiso-desktop-orientation"
     cp "${srcdir}/steamos-select-branch" "${pkgdir}/usr/bin/steamos-select-branch"
     cp "${srcdir}/jupiter-controller-update" "${pkgdir}/usr/bin/jupiter-controller-update"
+    cp "${srcdir}/jupiter-biosupdate" "${pkgdir}/usr/bin/jupiter-biosupdate"
     cp "${srcdir}/holoiso-disable-sessions" "${pkgdir}/usr/bin/holoiso-disable-sessions"  
     cp "${srcdir}/holoiso-enable-sessions" "${pkgdir}/usr/bin/holoiso-enable-sessions"
     cp "${srcdir}/steamos-priv-write" "${pkgdir}/usr/bin/steamos-polkit-helpers/steamos-priv-write"      
@@ -34,6 +35,7 @@ package() {
     cp "${srcdir}/steamos-gamemode.desktop" "${pkgdir}/etc/skel/Desktop/steamos-gamemode.desktop"
     cp "${srcdir}/desktopshortcuts.desktop" "${pkgdir}/etc/xdg/autostart/desktopshortcuts.desktop"
     cp "${srcdir}/holoiso-firstboot-config" "${pkgdir}/usr/bin/holoiso-firstboot-config"
+    cp "${srcdir}/holoiso-grub-update" "${pkgdir}/usr/bin/holoiso-grub-update"
     sed -i "s/snapshotver/snapshot$(date +%Y%m%d.%H%M)/g" osinfo_tmp
     sed -i "s/versionver/3.3/g" osinfo_tmp
     sed -i "s/buildver/${holoiso_codename}/g" osinfo_tmp
@@ -42,7 +44,8 @@ package() {
     cp "${srcdir}/holoiso-branch" "${pkgdir}/etc/holoiso-branch"
     cp "${srcdir}/logind.conf.d/suspend.conf" "${pkgdir}/etc/systemd/logind.conf.d/suspend.conf"
     chmod +x "${pkgdir}/usr/bin/steamos-session-select"
-    chmod +x "${pkgdir}/usr/bin/jupiter-controller-update"   
+    chmod +x "${pkgdir}/usr/bin/jupiter-controller-update" 
+    chmod +x "${pkgdir}/usr/bin/jupiter-biosupdate"   
     chmod +x "${pkgdir}/usr/bin/recoveryinit"  
     chmod +x "${pkgdir}/usr/bin/holoiso-reboot-tracker" 
     chmod +x "${pkgdir}/usr/bin/holoiso-gamescope-power"
@@ -55,6 +58,7 @@ package() {
     chmod +x "${pkgdir}/usr/bin/steamos-polkit-helpers/steamos-priv-write"
     chmod 0644 "${pkgdir}/usr/lib/systemd/system/holoiso-reboot-tracker.service"
     chmod +x "${pkgdir}/usr/bin/holoiso-desktop-orientation"
+    chmod +x "${pkgdir}/usr/bin/holoiso-grub-update"
     echo "Release output:"
     cat "${pkgdir}/etc/os-release"
 }

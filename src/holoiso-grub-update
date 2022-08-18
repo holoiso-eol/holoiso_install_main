@@ -1,0 +1,14 @@
+#!/bin/zsh
+
+# Define EFI partition here
+EFIPART=$(sudo blkid | grep HOLOEFI | cut -d ':' -f 1 | head -n 1)
+
+# Re-install grub if new version has been installed
+sudo mount ${EFIPART} /boot/efi
+sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=holo --removable
+
+# Unmount EFI to not make any derps later
+sudo umount -l ${EFIPART}
+
+# Remake config
+sudo grub-mkconfig -o /boot/grub/grub.cfg

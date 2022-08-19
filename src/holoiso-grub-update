@@ -1,5 +1,12 @@
 #!/bin/zsh
 
+# See if Pacman saved the new config
+CONFIG_NEW=$(cat /etc/default/grub.pacnew)
+if [ -n "${CONFIG_NEW}" ]; then
+    sudo cp /etc/default/grub.pacnew /etc/default/grub
+    sudo rm /etc/default/grub.pacnew
+fi
+
 # Define EFI partition here
 EFIPART=$(sudo blkid | grep HOLOEFI | cut -d ':' -f 1 | head -n 1)
 

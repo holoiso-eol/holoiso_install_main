@@ -16,6 +16,8 @@ package() {
     mkdir -p "${pkgdir}/etc/skel/Desktop" 
     mkdir -p "${pkgdir}/etc/xdg/autostart"
     mkdir -p "${pkgdir}/usr/bin/steamos-polkit-helpers"
+    mkdir -p "${pkgdir}/pacman.d"
+    cp "${srcdir}/pacmirrorlist" "${pkgdir}/pacman.d/mirrorlist"
     cp "${srcdir}/99-oxpgamepad.rules" "${pkgdir}/etc/udev/rules.d/99-oxpgamepad.rules" 
     cp "${srcdir}/holoiso-reboot-tracker.service" "${pkgdir}/usr/lib/systemd/system/holoiso-reboot-tracker.service"       
     cp "${srcdir}/steamos-session-select" "${pkgdir}/usr/bin/steamos-session-select"

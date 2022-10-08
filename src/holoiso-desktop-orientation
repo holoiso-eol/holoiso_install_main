@@ -9,6 +9,9 @@ OXP_LIST="ONE XPLAYER:ONEXPLAYER 1 T08:ONEXPLAYER 1S A08:ONEXPLAYER 1S T08:ONEXP
 # AYANEO AIR Devices
 AIR_LIST="AIR:AIR Pro"
 
+# AOKZOE Devices
+AOK_LIST="AOKZOE A1 AR07"
+
 # Rotate screens here
 if [ "${DEVICENAME}" == "Win600" ] || [ "${DEVICENAME}" == "Anbernic Win600" ]; then
     xrandr --output eDP-1 --rotate right
@@ -17,5 +20,7 @@ elif [ "${DEVICENAME}" == "Jupiter 1" ] || [ "${DEVICENAME}" == "Valve Jupiter 1
 elif [[ ":$OXP_LIST:" =~ ":$DEVICENAME:"  ]]; then
     xrandr --output eDP-1 --rotate left
 elif [[ ":$AIR_LIST:" =~ ":$DEVICENAME:"  ]]; then
+    xrandr --output eDP-1 --rotate left
+elif [[ ":$AOK_LIST:" =~ ":$DEVICENAME:"  ]]; then
     xrandr --output eDP-1 --rotate left
 fi

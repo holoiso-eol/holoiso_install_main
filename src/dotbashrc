@@ -15,6 +15,9 @@
 #
 
 # If not running interactively, don't do anything
+
+OS_REDIST_VER="holoiso"
+
 [[ $- != *i* ]] && return
 
 alias ls='ls --color=auto'

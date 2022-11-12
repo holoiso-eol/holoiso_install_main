@@ -43,6 +43,7 @@ package() {
     cp "${srcdir}/beta_pacman.conf" "${pkgdir}/etc/beta_pacman.conf"
     cp "${srcdir}/steamos-gamemode.desktop" "${pkgdir}/etc/skel/Desktop/steamos-gamemode.desktop"
     cp "${srcdir}/desktopshortcuts.desktop" "${pkgdir}/etc/xdg/autostart/desktopshortcuts.desktop"
+    cp "${srcdir}/screenorientation.desktop" "${pkgdir}/etc/xdg/autostart/screenorientation.desktop"
     cp "${srcdir}/holoiso-firstboot-config" "${pkgdir}/usr/bin/holoiso-firstboot-config"
     cp "${srcdir}/holoiso-grub-update" "${pkgdir}/usr/bin/holoiso-grub-update"
     sed -i "s/snapshotver/snapshot$(date +%Y%m%d.%H%M)/g" osinfo_tmp
@@ -63,6 +64,7 @@ package() {
     chmod +x "${pkgdir}/usr/bin/holoiso-enable-sessions"
     chmod +x "${pkgdir}/etc/skel/Desktop/steamos-gamemode.desktop"
     chmod +x "${pkgdir}/etc/xdg/autostart/desktopshortcuts.desktop"
+    chmod +x "${pkgdir}/etc/xdg/autostart/screenorientation.desktop"
     chmod +x "${pkgdir}/usr/bin/holoiso-firstboot-config"
     chmod +x "${pkgdir}/usr/bin/steamos-polkit-helpers/steamos-priv-write"
     chmod 0644 "${pkgdir}/usr/lib/systemd/system/holoiso-reboot-tracker.service"

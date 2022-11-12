@@ -12,6 +12,3 @@ sudo cp /etc/skel/Desktop/steamos-gamemode.desktop /home/$USER/Desktop/steamos-g
 # Permissions
 sudo chmod +x /home/$USER/Desktop/steam.desktop
 sudo chmod +x /home/$USER/Desktop/steamos-gamemode.desktop
-
-# Win600 and others screen orientation
-sudo holoiso-desktop-orientation

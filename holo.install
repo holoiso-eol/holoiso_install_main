@@ -1,0 +1,15 @@
+#!/bin/zsh
+
+post_upgrade() {
+    ### Check if autologin config is UTD
+    if [[ -n $(cat /etc/sddm.conf.d/autologin.conf | grep -e Relogin) ]]; then
+        echo "autologin up to date, skipping reconfig"
+    else
+        echo "Updating autologin configuration..."
+        echo -e "Relogin=true\n\n[X11]\n# Janky workaround for wayland sessions not stopping in sddm, kills\n# all active sddm-helper sessions on teardown\nDisplayStopCommand=/usr/bin/gamescope-wayland-teardown-workaround" >> /etc/sddm.conf.d/autologin.conf
+    fi
+}
+
+post_install() {
+    echo "Processing something...."
+}

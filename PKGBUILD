@@ -1,12 +1,19 @@
 pkgname=holoiso-main
 pkgver="snapshot$(date +%Y%m%d.%H%M)"
-pkgdesc="HoloISO OS Image version 3.4"
+pkgdesc="HoloISO OS Image version 3.4 (Stable)"
 pkgrel="1"
-depends=('archlinux-keyring' 'ark' 'cheese' 'cups' 'curl' 'dolphin' 'ffmpegthumbs' 'gamescope' 'git' 'glxinfo' 'go' 'gwenview' 'hunspell' 'hunspell-en_us' 'holo-wireplumber' 'jupiter-hw-support' 'kdegraphics-thumbnailers' 'konsole' 'kwrite' 'lib32-pipewire' 'lib32-pipewire-jack' 'lib32-pipewire-v4l2' 'libva' 'lib32-libva' 'libva-utils' 'libva-mesa-driver' 'libva-intel-driver' 'lib32-libva-mesa-driver' 'lib32-libva-intel-driver' 'lib32-vulkan-radeon' 'lib32-vulkan-intel' 'mangohud' 'mesa' 'lib32-mesa' 'holoiso-updateclient' 'noto-fonts-cjk' 'pipewire' 'pipewire-alsa' 'pipewire-jack' 'wireplumber' 'pipewire-pulse' 'pipewire-v4l2' 'plasma-meta' 'plasma-nm' 'print-manager' 'rz608-fix-git' 'spectacle' 'steam-jupiter-stable' 'steamdeck-kde-presets' 'tar' 'ufw' 'vlc' 'vulkan-intel' 'vulkan-radeon' 'wget' 'zsh' 'xbindkeys')
+install=holo.install
+depends=('archlinux-keyring' 'ark' 'cheese' 'cups' 'curl' 'dolphin' 'ffmpegthumbs' 'gamescope' 'git' 'glxinfo' 'go' 'gwenview' 'hunspell' 'hunspell-en_us' 'holo-wireplumber' 'jupiter-hw-support' 'kdegraphics-thumbnailers' 'konsole' 'kwrite' 'lib32-pipewire' 'lib32-pipewire-jack' 'lib32-pipewire-v4l2' 'libva' 'lib32-libva' 'libva-utils' 'libva-mesa-driver' 'libva-intel-driver' 'lib32-libva-mesa-driver' 'lib32-libva-intel-driver' 'lib32-vulkan-radeon' 'lib32-vulkan-intel' 'mangohud' 'mesa' 'lib32-mesa' 'holoiso-updateclient' 'noto-fonts-cjk' 'pipewire' 'pipewire-alsa' 'pipewire-jack' 'wireplumber' 'pipewire-pulse' 'pipewire-v4l2' 'plasma-meta' 'plasma-nm' 'print-manager' 'rz608-fix-git' 'spectacle' 'steam-jupiter-stable' 'steamdeck-kde-presets' 'tar' 'ufw' 'vlc' 'vulkan-intel' 'vulkan-radeon' 'wget' 'zsh' 'xbindkeys' 'steam-im-modules' 'systemd-swap' 'ttf-twemoji-default' 'ttf-hack' 'ttf-dejavu' 'pkgconf' 'pavucontrol' 'partitionmanager' 'gamemode' 'lib32-gamemode' 'cpupower' 'bluez-plugins' 'bluez-utils')
 arch=("x86_64")
 
 package() {
     holoiso_codename="Stable ($(echo $RANDOM | md5sum | head -c 10; echo;))"
+    cp -r "${srcdir}/new_steamos_dirs/etc" "${pkgdir}"
+    cp -r "${srcdir}/new_steamos_dirs/usr" "${pkgdir}"
+    chmod -R +x "${pkgdir}/usr/bin"
+    chmod -R 644 "${pkgdir}/etc/flatpak"
+    chmod -R 644 "${pkgdir}/usr/lib"
+    chmod -R +x "${pkgdir}/usr/share"
     mkdir -p "${pkgdir}/usr/bin"
     mkdir -p "${pkgdir}/etc"
     mkdir -p "${pkgdir}/etc/systemd/logind.conf.d"
@@ -44,7 +51,7 @@ package() {
     cp "${srcdir}/osinfo_tmp" "${pkgdir}/etc/os-release"
     rm "${srcdir}/osinfo_tmp"
     cp "${srcdir}/holoiso-branch" "${pkgdir}/etc/holoiso-branch"
-    cp "${srcdir}/logind.conf.d/suspend.conf" "${pkgdir}/etc/systemd/logind.conf.d/suspend.conf"
+    cp -r "${srcdir}/logind.conf.d/" "${pkgdir}/etc/systemd/"
     chmod +x "${pkgdir}/usr/bin/steamos-session-select"
     chmod +x "${pkgdir}/usr/bin/jupiter-controller-update" 
     chmod +x "${pkgdir}/usr/bin/jupiter-biosupdate"   

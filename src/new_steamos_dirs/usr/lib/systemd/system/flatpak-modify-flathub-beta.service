@@ -1,0 +1,11 @@
+[Unit]
+Description=Remove flathub beta repo
+After=flatpak-workaround.service
+ConditionPathExists=|!/var/lib/flatpak/.flatpak-modify-flathub-beta-once
+
+[Service]
+Type=oneshot
+
+ExecStart=/bin/bash -c "flatpak remote-modify --no-enumerate flathub-beta || true"
+# Write out a canary so we only run this once
+ExecStart=touch /var/lib/flatpak/.flatpak-modify-flathub-beta-once

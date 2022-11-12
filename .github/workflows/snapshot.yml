@@ -25,16 +25,15 @@ jobs:
           
       - name: Add to arch repository
         run: |
-          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso/os/x86_64/holoiso.db -P pkgout"
-          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso/os/x86_64/holoiso.db.tar.gz -P pkgout"
-          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso/os/x86_64/holoiso.db.tar.gz.old -P pkgout"
-          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso/os/x86_64/holoiso.db.tar.xz -P pkgout"
-          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso/os/x86_64/holoiso.files -P pkgout"
-          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso/os/x86_64/holoiso.files.tar.gz -P pkgout"
-          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso/os/x86_64/holoiso.files.tar.gz.old -P pkgout"
-          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso/os/x86_64/holoiso.files.tar.xz -P pkgout"
-          su -s /bin/bash nobody -c "repo-add pkgout/holoiso.db.tar.gz pkgout/*.tar.zst"
-
+          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso-stable/os/x86_64/holoiso-stable.db -P pkgout"
+          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso-stable/os/x86_64/holoiso-stable.db.tar.gz -P pkgout"
+          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso-stable/os/x86_64/holoiso-stable.db.tar.gz.old -P pkgout"
+          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso-stable/os/x86_64/holoiso-stable.db.tar.xz -P pkgout"
+          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso-stable/os/x86_64/holoiso-stable.files -P pkgout"
+          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso-stable/os/x86_64/holoiso-stable.files.tar.gz -P pkgout"
+          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso-stable/os/x86_64/holoiso-stable.files.tar.gz.old -P pkgout"
+          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso-stable/os/x86_64/holoiso-stable.files.tar.xz -P pkgout"
+          su -s /bin/bash nobody -c "repo-add pkgout/holoiso-stable.db.tar.gz pkgout/*.tar.zst"
       - uses: actions/upload-artifact@v2
         with:
           name: package

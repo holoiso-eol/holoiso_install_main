@@ -1,0 +1,23 @@
+# This works around https://github.com/flatpak/flatpak/issues/4111
+
+[Unit]
+Description=Jupiter workaround for flatpak initial setup
+Wants=var-lib-flatpak.mount
+After=local-fs.target var-lib-flatpak.mount
+Before=sddm.service
+ConditionPathExists=|!/var/lib/flatpak/repo
+ConditionPathExists=|!/var/lib/flatpak/exports
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+# Simply executing a privileged flatpak operation, such as listing remotes, will cause it to
+# bootstrap /var/lib/flatpak The normal bootstrap of this directory in flatpak is suppressed by it
+# existing, so normal users cannot trigger the bootstrap.
+# See https://github.com/flatpak/flatpak/issues/4111
+ExecStart=flatpak remotes
+# Flatpak icons are here, as indicated by XDG_DATA_DIRS. This directory is created the first time
+# an app is installed, but if it doesn't exist when the Plasma session starts then it will be
+# ignored until the session is restarted.
+# https://bugs.kde.org/show_bug.cgi?id=455702
+ExecStart=mkdir -p /var/lib/flatpak/exports/share/icons/hicolor/128x128/apps

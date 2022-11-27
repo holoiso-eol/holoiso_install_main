@@ -3,13 +3,77 @@
 post_upgrade() {
     ### Check if autologin config is UTD
     if [[ -n $(cat /etc/sddm.conf.d/autologin.conf | grep -e Relogin) ]]; then
-        echo "autologin up to date, skipping reconfig"
+        echo "(1/2) AutoLogin configuration up to date, skipping reconfig"
     else
-        echo "Updating autologin configuration..."
+        echo "(1/2) Updating autologin configuration..."
         echo -e "Relogin=true\n\n[X11]\n# Janky workaround for wayland sessions not stopping in sddm, kills\n# all active sddm-helper sessions on teardown\nDisplayStopCommand=/usr/bin/gamescope-wayland-teardown-workaround" >> /etc/sddm.conf.d/autologin.conf
+    fi
+
+    if [[ "$(systemctl status var-lib-flatpak.mount | grep Active | cut -d " " -f 7)" == "active" ]]; then
+        echo "(2/2) Offload Directories are mounted"
+    else
+        echo "(2/2) Generating offload folders..."
+        mkdir -p /home/.steamos/
+        mkdir -p /home/.steamos/offload/opt
+        mkdir -p /home/.steamos/offload/root
+        mkdir -p /home/.steamos/offload/srv
+        mkdir -p /home/.steamos/offload/usr/lib/debug
+        mkdir -p /home/.steamos/offload/usr/local
+        mkdir -p /home/.steamos/offload/var/lib/flatpak
+        mkdir -p /home/.steamos/offload/var/cache/pacman
+        mkdir -p /home/.steamos/offload/var/lib/docker
+        mkdir -p /home/.steamos/offload/var/lib/systemd/coredump
+        mkdir -p /home/.steamos/offload/var/log
+        mkdir -p /home/.steamos/offload/var/tmp
+        echo "(2/2) Force move-copy physical copy to offload folders"
+        mv /opt/* /home/.steamos/offload/opt
+        mv /root/* /home/.steamos/offload/root
+        mv /srv/* /home/.steamos/offload/srv
+        mv /usr/lib/debug/* /home/.steamos/offload/usr/lib/debug
+        mv /usr/local/* /home/.steamos/offload/usr/local
+        mv /var/lib/flatpak/* /home/.steamos/offload/var/lib/flatpak
+        mv /var/cache/pacman/* /home/.steamos/offload/var/cache/pacman
+        mv /var/lib/docker/* /home/.steamos/offload/var/lib/docker
+        mv /var/lib/systemd/coredump/* /home/.steamos/offload/lib/systemd/coredump
+        mv /var/log/* /home/.steamos/offload/var/log
+        mv /var/tmp/* /home/.steamos/offload/var/tmp
+        echo "(2/2) Enable offload mounts"
+        systemctl enable steamos-offload.target opt.mount root.mount srv.mount usr-lib-debug.mount usr-local.mount var-cache-pacman.mount var-lib-docker.mount var-lib-flatpak.mount var-lib-systemd-coredump.mount var-log.mount var-tmp.mount
     fi
 }
 
 post_install() {
-    echo "Processing something...."
+    echo "Initial installation detected."
+    if [[ "$(systemctl status var-lib-flatpak.mount | grep Active | cut -d " " -f 7)" == "active" ]]; then
+        echo "Preparing OOBE offload directories"
+    else
+        echo "Preparing OOBE offload directories"
+        echo "(1/3) Generating offload folders..."
+        mkdir -p /home/.steamos/
+        mkdir -p /home/.steamos/offload/opt
+        mkdir -p /home/.steamos/offload/root
+        mkdir -p /home/.steamos/offload/srv
+        mkdir -p /home/.steamos/offload/usr/lib/debug
+        mkdir -p /home/.steamos/offload/usr/local
+        mkdir -p /home/.steamos/offload/var/lib/flatpak
+        mkdir -p /home/.steamos/offload/var/cache/pacman
+        mkdir -p /home/.steamos/offload/var/lib/docker
+        mkdir -p /home/.steamos/offload/var/lib/systemd/coredump
+        mkdir -p /home/.steamos/offload/var/log
+        mkdir -p /home/.steamos/offload/var/tmp
+        echo "(2/3) Force move-copy physical copy to offload folders"
+        mv /opt/* /home/.steamos/offload/opt
+        mv /root/* /home/.steamos/offload/root
+        mv /srv/* /home/.steamos/offload/srv
+        mv /usr/lib/debug/* /home/.steamos/offload/usr/lib/debug
+        mv /usr/local/* /home/.steamos/offload/usr/local
+        mv /var/lib/flatpak/* /home/.steamos/offload/var/lib/flatpak
+        mv /var/cache/pacman/* /home/.steamos/offload/var/cache/pacman
+        mv /var/lib/docker/* /home/.steamos/offload/var/lib/docker
+        mv /var/lib/systemd/coredump/* /home/.steamos/offload/lib/systemd/coredump
+        mv /var/log/* /home/.steamos/offload/var/log
+        mv /var/tmp/* /home/.steamos/offload/var/tmp
+        echo "(3/3) Enable offload mounts"
+        systemctl enable steamos-offload.target opt.mount root.mount srv.mount usr-lib-debug.mount usr-local.mount var-cache-pacman.mount var-lib-docker.mount var-lib-flatpak.mount var-lib-systemd-coredump.mount var-log.mount var-tmp.mount
+    fi
 }

@@ -2,7 +2,7 @@
 
 # See if Pacman saved the new config
 CONFIG_NEW=$(cat /etc/default/grub.pacnew)
-if [ -n "${CONFIG_NEW}" ]; then
+if [ -f "${CONFIG_NEW}" ]; then
     sudo cp /etc/default/grub.pacnew /etc/default/grub
     sudo rm /etc/default/grub.pacnew
 fi
@@ -11,11 +11,16 @@ fi
 EFIPART=$(sudo blkid | grep HOLOEFI | cut -d ':' -f 1 | head -n 1)
 
 # Re-install grub if new version has been installed
-sudo mount ${EFIPART} /boot/efi
+if [[ -n $(mount | grep ${EFIPART}) ]]; then
+    echo "Updating GRUB on ${EFIPART}..."
+else
+    echo "Mounting and updating GRUB on ${EFIPART}..."
+    sudo mount ${EFIPART} /boot/efi
+fi
 sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=holo --removable
-
-# Unmount EFI to not make any derps later
-sudo umount -l ${EFIPART}
 
 # Remake config
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+# Finalize
+sudo umount -l ${EFIPART}

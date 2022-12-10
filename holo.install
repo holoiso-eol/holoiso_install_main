@@ -9,7 +9,7 @@ post_upgrade() {
         echo -e "Relogin=true\n\n[X11]\n# Janky workaround for wayland sessions not stopping in sddm, kills\n# all active sddm-helper sessions on teardown\nDisplayStopCommand=/usr/bin/gamescope-wayland-teardown-workaround" >> /etc/sddm.conf.d/autologin.conf
     fi
 
-    if [[ "$(systemctl status var-lib-flatpak.mount | grep Active | cut -d " " -f 7)" == "active" ]]; then
+    if [[ "$(systemctl status steamos-offload.target | grep Active | cut -d " " -f 7)" == "active" ]]; then
         echo "(2/2) Offload Directories are mounted"
     else
         echo "(2/2) Generating offload folders..."
@@ -40,12 +40,13 @@ post_upgrade() {
         echo "(2/2) Enable offload mounts"
         systemctl enable steamos-offload.target opt.mount root.mount srv.mount usr-lib-debug.mount usr-local.mount var-cache-pacman.mount var-lib-docker.mount var-lib-flatpak.mount var-lib-systemd-coredump.mount var-log.mount var-tmp.mount
     fi
+    systemctl enable powerbutton-chmod && systemctl start powerbutton-chmod
 }
 
 post_install() {
     echo "Initial installation detected."
-    if [[ "$(systemctl status var-lib-flatpak.mount | grep Active | cut -d " " -f 7)" == "active" ]]; then
-        echo "Preparing OOBE offload directories"
+    if [[ "$(systemctl status steamos-offload.target | grep Active | cut -d " " -f 7)" == "active" ]]; then
+        echo "Your folders are somehow already configured. Mind sharing a trick on how to? :)"
     else
         echo "Preparing OOBE offload directories"
         echo "(1/3) Generating offload folders..."
@@ -76,4 +77,6 @@ post_install() {
         echo "(3/3) Enable offload mounts"
         systemctl enable steamos-offload.target opt.mount root.mount srv.mount usr-lib-debug.mount usr-local.mount var-cache-pacman.mount var-lib-docker.mount var-lib-flatpak.mount var-lib-systemd-coredump.mount var-log.mount var-tmp.mount
     fi
+    systemctl enable powerbutton-chmod && systemctl start powerbutton-chmod
+    touch /etc/holoiso-oobe
 }

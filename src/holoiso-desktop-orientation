@@ -2,6 +2,7 @@
 # Win600 and others screen orientation
 # Read WMID here
 DEVICENAME=$(cat /sys/devices/virtual/dmi/id/product_name)
+INT_DISPLAY=$(xrandr | awk '/\<connected\>/ {print $1}' | grep eDP | head -n1)
 
 # OXP Devices
 OXP_LIST="ONE XPLAYER:ONEXPLAYER 1 T08:ONEXPLAYER 1S A08:ONEXPLAYER 1S T08:ONEXPLAYER mini A07:ONEXPLAYER mini GA72:ONEXPLAYER mini GT72:ONEXPLAYER GUNDAM GA72:ONEXPLAYER 2 ARP23:ONEXPLAYER Mini Pro"
@@ -14,13 +15,13 @@ AOK_LIST="AOKZOE A1 AR07"
 
 # Rotate screens here
 if [ "${DEVICENAME}" == "Win600" ] || [ "${DEVICENAME}" == "Anbernic Win600" ]; then
-    xrandr --output eDP-1 --rotate right
+    xrandr --output ${INT_DISPLAY} --rotate right
 elif [ "${DEVICENAME}" == "Jupiter 1" ] || [ "${DEVICENAME}" == "Valve Jupiter 1" ]; then
-    xrandr --output eDP-1 --rotate right
+    xrandr --output ${INT_DISPLAY} --rotate right
 elif [[ ":$OXP_LIST:" =~ ":$DEVICENAME:"  ]]; then
-    xrandr --output eDP-1 --rotate left
+    xrandr --output ${INT_DISPLAY} --rotate left
 elif [[ ":$AIR_LIST:" =~ ":$DEVICENAME:"  ]]; then
-    xrandr --output eDP-1 --rotate left
+    xrandr --output ${INT_DISPLAY} --rotate left
 elif [[ ":$AOK_LIST:" =~ ":$DEVICENAME:"  ]]; then
-    xrandr --output eDP-1 --rotate left
+    xrandr --output ${INT_DISPLAY} --rotate left
 fi

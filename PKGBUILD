@@ -45,7 +45,7 @@ package() {
     cp "${srcdir}/recoveryinit" "${pkgdir}/usr/bin/recoveryinit"      
     cp "${srcdir}/osinfo" "${srcdir}/osinfo_tmp"
     cp "${srcdir}/pacman.conf" "${pkgdir}/etc/pacman.conf"
-    cp "${srcdir}/beta_pacman.conf" "${pkgdir}/etc/beta_pacman.conf"
+    cp "${srcdir}/stable_pacman.conf" "${pkgdir}/etc/stable_pacman.conf"
     cp "${srcdir}/steamos-gamemode.desktop" "${pkgdir}/etc/skel/Desktop/steamos-gamemode.desktop"
     cp "${srcdir}/desktopshortcuts.desktop" "${pkgdir}/etc/xdg/autostart/desktopshortcuts.desktop"
     cp "${srcdir}/screenorientation.desktop" "${pkgdir}/etc/xdg/autostart/screenorientation.desktop"

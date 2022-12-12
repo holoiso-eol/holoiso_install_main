@@ -38,6 +38,10 @@ if [[ "$#" = 1 ]]; then
           echo "$branch"
           exit 0
           ;;
+        "beta")
+          echo "$branch"
+          exit 0
+          ;;
         *)
           echo "unknown branch name in os-release: $branch" 1>&2
           exit 1

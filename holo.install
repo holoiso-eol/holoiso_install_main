@@ -9,8 +9,8 @@ post_upgrade() {
         echo -e "Relogin=true\n\n[X11]\n# Janky workaround for wayland sessions not stopping in sddm, kills\n# all active sddm-helper sessions on teardown\nDisplayStopCommand=/usr/bin/gamescope-wayland-teardown-workaround" >> /etc/sddm.conf.d/autologin.conf
     fi
 
-    if [[ "$(systemctl status steamos-offload.target | grep Active | cut -d " " -f 7)" == "active" ]]; then
-        echo "(2/2) Offload Directories are mounted"
+    if [[ -d "/home/.steamos" ]]; then
+        echo "(2/2) Offload directories do exist. Skipping"
     else
         echo "(2/2) Generating offload folders..."
         mkdir -p /home/.steamos/
@@ -45,8 +45,8 @@ post_upgrade() {
 
 post_install() {
     echo "Initial installation detected."
-    if [[ "$(systemctl status steamos-offload.target | grep Active | cut -d " " -f 7)" == "active" ]]; then
-        echo "Your folders are somehow already configured. Mind sharing a trick on how to? :)"
+    if [[ -d "/home/.steamos" ]]; then
+        echo "(2/2) Offload directories do exist. Skipping"
     else
         echo "Preparing OOBE offload directories"
         echo "(1/3) Generating offload folders..."

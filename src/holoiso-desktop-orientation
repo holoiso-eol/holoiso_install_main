@@ -7,8 +7,10 @@ INT_DISPLAY=$(xrandr | awk '/\<connected\>/ {print $1}' | grep eDP | head -n1)
 # OXP Devices
 OXP_LIST="ONE XPLAYER:ONEXPLAYER 1 T08:ONEXPLAYER 1S A08:ONEXPLAYER 1S T08:ONEXPLAYER mini A07:ONEXPLAYER mini GA72:ONEXPLAYER mini GT72:ONEXPLAYER GUNDAM GA72:ONEXPLAYER 2 ARP23:ONEXPLAYER Mini Pro"
 
-# AYANEO AIR Devices
-AIR_LIST="AIR:AIR Pro"
+# AYANEO Devices with Left Rotated Screen
+AYANEO_LEFT_ROTATED_DEVICES="NEXT:NEXT Pro:NEXT Advance:AYANEO NEXT:AYANEO NEXT Pro:AYANEO NEXT Advance:AYA NEO Fouder:AYA NEO 2021:AYANEO 2021:AYANEO 2021 Pro:AYANEO 2021 Pro:AYANEO 2021 Pro Retro Power:AYANEO 2"
+# AYANEO Devices with Right Rotated Screen
+AYANEO_RIGHT_ROTATED_DEVICES="AIR:AIR Pro"
 
 # AOKZOE Devices
 AOK_LIST="AOKZOE A1 AR07"
@@ -20,7 +22,9 @@ elif [ "${DEVICENAME}" == "Jupiter 1" ] || [ "${DEVICENAME}" == "Valve Jupiter 1
     xrandr --output ${INT_DISPLAY} --rotate right
 elif [[ ":$OXP_LIST:" =~ ":$DEVICENAME:"  ]]; then
     xrandr --output ${INT_DISPLAY} --rotate left
-elif [[ ":$AIR_LIST:" =~ ":$DEVICENAME:"  ]]; then
+elif [[ ":$AYANEO_LEFT_ROTATED_DEVICES:" =~ ":$DEVICENAME:"  ]]; then
+    xrandr --output ${INT_DISPLAY} --rotate right
+elif [[ ":$AYANEO_RIGHT_ROTATED_DEVICES:" =~ ":$DEVICENAME:"  ]]; then
     xrandr --output ${INT_DISPLAY} --rotate left
 elif [[ ":$AOK_LIST:" =~ ":$DEVICENAME:"  ]]; then
     xrandr --output ${INT_DISPLAY} --rotate left

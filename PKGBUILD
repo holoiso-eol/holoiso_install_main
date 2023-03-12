@@ -1,6 +1,6 @@
 pkgname=holoiso-main
 pkgver="snapshot$(date +%Y%m%d.%H%M)"
-pkgdesc="HoloISO OS Image version 4 (Stable)"
+pkgdesc="HoloISO OS Image version 4 (Beta)"
 pkgrel="1"
 install=holo.install
 depends=('archlinux-keyring' 'ark' 'cheese' 'cups' 'curl' 'dolphin' 'ffmpegthumbs' 'gamescope' 'git' 'glxinfo' 'go' 'gwenview' 'hunspell' 'hunspell-en_us' 'holo-wireplumber' 'jupiter-hw-support' 'kdegraphics-thumbnailers' 'konsole' 'kwrite' 'lib32-pipewire' 'lib32-pipewire-jack' 'lib32-pipewire-v4l2' 'libva' 'lib32-libva' 'libva-utils' 'libva-mesa-driver' 'libva-intel-driver' 'lib32-libva-mesa-driver' 'lib32-libva-intel-driver' 'lib32-vulkan-radeon' 'lib32-vulkan-intel' 'mangohud' 'mesa' 'lib32-mesa' 'holoiso-updateclient' 'noto-fonts-cjk' 'pipewire' 'pipewire-alsa' 'pipewire-jack' 'wireplumber' 'pipewire-pulse' 'pipewire-v4l2' 'plasma-meta' 'plasma-nm' 'print-manager' 'rz608-fix-git' 'spectacle' 'steam-jupiter-stable' 'steamdeck-kde-presets' 'tar' 'ufw' 'vlc' 'vulkan-intel' 'vulkan-radeon' 'wget' 'zsh' 'xbindkeys' 'steam-im-modules' 'systemd-swap' 'ttf-twemoji-default' 'ttf-hack' 'ttf-dejavu' 'pkgconf' 'pavucontrol' 'partitionmanager' 'gamemode' 'lib32-gamemode' 'cpupower' 'bluez-plugins' 'bluez-utils' 'xf86-video-amdgpu' 'xf86-video-intel')
@@ -45,7 +45,7 @@ package() {
     cp "${srcdir}/recoveryinit" "${pkgdir}/usr/bin/recoveryinit"      
     cp "${srcdir}/osinfo" "${srcdir}/osinfo_tmp"
     cp "${srcdir}/pacman.conf" "${pkgdir}/etc/pacman.conf"
-    cp "${srcdir}/beta_pacman.conf" "${pkgdir}/etc/beta_pacman.conf"
+    cp "${srcdir}/stable_pacman.conf" "${pkgdir}/etc/stable_pacman.conf"
     cp "${srcdir}/steamos-gamemode.desktop" "${pkgdir}/etc/skel/Desktop/steamos-gamemode.desktop"
     cp "${srcdir}/desktopshortcuts.desktop" "${pkgdir}/etc/xdg/autostart/desktopshortcuts.desktop"
     cp "${srcdir}/screenorientation.desktop" "${pkgdir}/etc/xdg/autostart/screenorientation.desktop"

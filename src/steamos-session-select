@@ -61,8 +61,10 @@ case "$session" in
   plasma)
     if [[ "$session_type" == "x11" ]]; then
       session_launcher="plasma-steamos-oneshot.desktop"
+      check_for_oobe=1
     else
       session_launcher="plasma-steamos-wayland-oneshot.desktop"
+      check_for_oobe=1
     fi
     create_sentinel=1
   ;;
@@ -87,6 +89,12 @@ fi
   echo "[Autologin]"
   echo "Session=$session_launcher"
 } > "$CONF_FILE"
+
+if [[ "$check_for_oobe" == "1" ]]; then
+    if [[ -e /etc/holoiso-oobe ]]; then
+        rm /etc/holoiso-oobe
+    fi
+fi
 
 echo "Updated system autologin session to $session_launcher"
 systemctl reset-failed sddm

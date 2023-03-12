@@ -1,13 +1,13 @@
 pkgname=holoiso-main
 pkgver="snapshot$(date +%Y%m%d.%H%M)"
-pkgdesc="HoloISO OS Image version 3.5 (Stable)"
+pkgdesc="HoloISO OS Image version 4 (Stable)"
 pkgrel="1"
 install=holo.install
 depends=('archlinux-keyring' 'ark' 'cheese' 'cups' 'curl' 'dolphin' 'ffmpegthumbs' 'gamescope' 'git' 'glxinfo' 'go' 'gwenview' 'hunspell' 'hunspell-en_us' 'holo-wireplumber' 'jupiter-hw-support' 'kdegraphics-thumbnailers' 'konsole' 'kwrite' 'lib32-pipewire' 'lib32-pipewire-jack' 'lib32-pipewire-v4l2' 'libva' 'lib32-libva' 'libva-utils' 'libva-mesa-driver' 'libva-intel-driver' 'lib32-libva-mesa-driver' 'lib32-libva-intel-driver' 'lib32-vulkan-radeon' 'lib32-vulkan-intel' 'mangohud' 'mesa' 'lib32-mesa' 'holoiso-updateclient' 'noto-fonts-cjk' 'pipewire' 'pipewire-alsa' 'pipewire-jack' 'wireplumber' 'pipewire-pulse' 'pipewire-v4l2' 'plasma-meta' 'plasma-nm' 'print-manager' 'rz608-fix-git' 'spectacle' 'steam-jupiter-stable' 'steamdeck-kde-presets' 'tar' 'ufw' 'vlc' 'vulkan-intel' 'vulkan-radeon' 'wget' 'zsh' 'xbindkeys' 'steam-im-modules' 'systemd-swap' 'ttf-twemoji-default' 'ttf-hack' 'ttf-dejavu' 'pkgconf' 'pavucontrol' 'partitionmanager' 'gamemode' 'lib32-gamemode' 'cpupower' 'bluez-plugins' 'bluez-utils' 'xf86-video-amdgpu' 'xf86-video-intel')
 arch=("x86_64")
 
 package() {
-    holoiso_codename="Stable ($(echo $RANDOM | md5sum | head -c 10; echo;))"
+    holoiso_codename="Beta ($(echo $RANDOM | md5sum | head -c 10; echo;))"
     cp -r "${srcdir}/new_steamos_dirs/etc" "${pkgdir}"
     cp -r "${srcdir}/new_steamos_dirs/usr" "${pkgdir}"
     cp -r "${srcdir}/steamos-customizations/etc" "${pkgdir}"
@@ -51,8 +51,8 @@ package() {
     cp "${srcdir}/screenorientation.desktop" "${pkgdir}/etc/xdg/autostart/screenorientation.desktop"
     cp "${srcdir}/holoiso-firstboot-config" "${pkgdir}/usr/bin/holoiso-firstboot-config"
     cp "${srcdir}/holoiso-grub-update" "${pkgdir}/usr/bin/holoiso-grub-update"
-    sed -i "s/snapshotver/snapshot$(date +%Y%m%d.%H%M)/g" osinfo_tmp
-    sed -i "s/versionver/3.4/g" osinfo_tmp
+    sed -i "s/snapshotver/snapshot$(date +%Y%m%d.%H%M)_preview/g" osinfo_tmp
+    sed -i "s/versionver/4/g" osinfo_tmp
     sed -i "s/buildver/${holoiso_codename}/g" osinfo_tmp
     cp "${srcdir}/osinfo_tmp" "${pkgdir}/etc/os-release"
     rm "${srcdir}/osinfo_tmp"

@@ -1,6 +1,8 @@
-#!/bin/bash
-# Win600 and others screen orientation
-# Read WMID here
+#!/bin/sh
+
+set -e
+
+# Rotate the builtin screen every time so it's the right way around.
 DEVICENAME=$(cat /sys/devices/virtual/dmi/id/product_name)
 INT_DISPLAY=$(xrandr | awk '/\<connected\>/ {print $1}' | grep eDP | head -n1)
 

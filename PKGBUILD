@@ -3,7 +3,14 @@ pkgver="snapshot$(date +%Y%m%d.%H%M)"
 pkgdesc="HoloISO OS Image version 4"
 pkgrel="1"
 install=holo.install
-depends=('archlinux-keyring' 'ark' 'cheese' 'cups' 'curl' 'dolphin' 'ffmpegthumbs' 'gamescope' 'git' 'glxinfo' 'go' 'gwenview' 'hunspell' 'hunspell-en_us' 'holo-wireplumber' 'kdegraphics-thumbnailers' 'konsole' 'kwrite' 'lib32-pipewire' 'lib32-pipewire-jack' 'lib32-pipewire-v4l2' 'libva' 'lib32-libva' 'libva-utils' 'libva-mesa-driver' 'libva-intel-driver' 'lib32-libva-mesa-driver' 'lib32-libva-intel-driver' 'lib32-vulkan-radeon' 'lib32-vulkan-intel' 'mangohud' 'mesa' 'lib32-mesa' 'holoiso-updateclient' 'noto-fonts-cjk' 'pipewire' 'pipewire-alsa' 'pipewire-jack' 'wireplumber' 'pipewire-pulse' 'pipewire-v4l2' 'plasma-meta' 'plasma-nm' 'print-manager' 'rz608-fix-git' 'spectacle' 'steam-jupiter-stable' 'steamdeck-kde-presets' 'tar' 'ufw' 'vlc' 'vulkan-intel' 'vulkan-radeon' 'wget' 'zsh' 'xbindkeys' 'steam-im-modules' 'systemd-swap' 'ttf-twemoji-default' 'ttf-hack' 'ttf-dejavu' 'pkgconf' 'pavucontrol' 'partitionmanager' 'gamemode' 'lib32-gamemode' 'cpupower' 'bluez-plugins' 'bluez-utils' 'xf86-video-amdgpu' 'xf86-video-intel')
+depends=('archlinux-keyring' 'ark' 'cheese' 'cups' 'curl' 'dolphin' 'ffmpegthumbs' 'gamescope' 'git' 'glxinfo' 'go' 'gwenview' 'hunspell' 'hunspell-en_us' 'holo-wireplumber' 'kdegraphics-thumbnailers' 'konsole' 'kwrite' 'lib32-pipewire' 'lib32-pipewire-jack' 'lib32-pipewire-v4l2' 'libva' 'lib32-libva' 'libva-utils' 'libva-mesa-driver' 'libva-intel-driver' 'lib32-libva-mesa-driver' 'lib32-libva-intel-driver' 'lib32-vulkan-radeon' 'lib32-vulkan-intel' 'mangohud' 'mesa' 'lib32-mesa' 'holoiso-updateclient' 'noto-fonts-cjk' 'pipewire' 'pipewire-alsa' 'pipewire-jack' 'wireplumber' 'pipewire-pulse' 'pipewire-v4l2' 'plasma-meta' 'plasma-nm' 'print-manager' 'spectacle' 'steam-jupiter-stable' 'tar' 'ufw' 'vlc' 'vulkan-intel' 'vulkan-radeon' 'wget' 'zsh' 'xbindkeys' 'steam-im-modules' 'systemd-swap' 'ttf-twemoji-default' 'ttf-hack' 'ttf-dejavu' 'pkgconf' 'pavucontrol' 'partitionmanager' 'gamemode' 'lib32-gamemode' 'bluez-plugins' 'bluez-utils' 'xf86-video-amdgpu' 'xf86-video-intel' 'python-evdev'
+         'dmidecode' # for jupiter-biosupdate
+         'python-crcmod' 'python-click' 'python-progressbar' 'python-hid'
+         'jq' # for jupiter-controller-update, jupiter-biosupdate
+         'alsa-utils' # for the sound workarounds
+         'parted' 'e2fsprogs' # for sdcard formatting
+         'udisks2>=2.9.4-1.1' # for mounting external drives with the 'as-user' option
+        'kdialog')
 makedepends=('rsync' 'git' 'openssh' 'xorg-xcursorgen')
 arch=("x86_64")
 
@@ -59,19 +66,15 @@ package() {
     cp "${srcdir}/steamos-session-select" "${pkgdir}/usr/bin/steamos-session-select"
     cp "${srcdir}/holoiso-gamescope-power" "${pkgdir}/usr/bin/holoiso-gamescope-power"
     cp "${srcdir}/holoiso-reboot-tracker" "${pkgdir}/usr/bin/holoiso-reboot-tracker"
-    cp "${srcdir}/holoiso-desktop-orientation" "${pkgdir}/usr/bin/holoiso-desktop-orientation"
     cp "${srcdir}/steamos-select-branch" "${pkgdir}/usr/bin/steamos-select-branch"
     cp "${srcdir}/holoiso-disable-sessions" "${pkgdir}/usr/bin/holoiso-disable-sessions"  
-    cp "${srcdir}/holoiso-enable-sessions" "${pkgdir}/usr/bin/holoiso-enable-sessions"      
-    cp "${srcdir}/recoveryinit" "${pkgdir}/usr/bin/recoveryinit"      
+    cp "${srcdir}/holoiso-enable-sessions" "${pkgdir}/usr/bin/holoiso-enable-sessions"          
     cp "${srcdir}/steamos-gamemode.desktop" "${pkgdir}/etc/skel/Desktop/steamos-gamemode.desktop"
     cp "${srcdir}/desktopshortcuts.desktop" "${pkgdir}/etc/xdg/autostart/desktopshortcuts.desktop"
-    cp "${srcdir}/screenorientation.desktop" "${pkgdir}/etc/xdg/autostart/screenorientation.desktop"
     cp "${srcdir}/holoiso-firstboot-config" "${pkgdir}/usr/bin/holoiso-firstboot-config"
     cp "${srcdir}/holoiso-grub-update" "${pkgdir}/usr/bin/holoiso-grub-update"
     cp -r "${srcdir}/logind.conf.d/" "${pkgdir}/etc/systemd/"
     chmod +x "${pkgdir}/usr/bin/steamos-session-select"  
-    chmod +x "${pkgdir}/usr/bin/recoveryinit"  
     chmod +x "${pkgdir}/usr/bin/holoiso-reboot-tracker" 
     chmod +x "${pkgdir}/usr/bin/holoiso-gamescope-power"
     chmod +x "${pkgdir}/usr/bin/holoiso-disable-sessions"
@@ -79,16 +82,13 @@ package() {
     chmod +x "${pkgdir}/usr/bin/holoiso-enable-sessions"
     chmod +x "${pkgdir}/etc/skel/Desktop/steamos-gamemode.desktop"
     chmod +x "${pkgdir}/etc/xdg/autostart/desktopshortcuts.desktop"
-    chmod +x "${pkgdir}/etc/xdg/autostart/screenorientation.desktop"
     chmod +x "${pkgdir}/usr/bin/holoiso-firstboot-config"
     chmod 0644 "${pkgdir}/usr/lib/systemd/system/holoiso-reboot-tracker.service"
-    chmod +x "${pkgdir}/usr/bin/holoiso-desktop-orientation"
     chmod +x "${pkgdir}/usr/bin/holoiso-grub-update"
     echo "Release output:"
     cat "${pkgdir}/etc/os-release"
 
     ## jupiter-hw-support
-    rm -rf ${srcdir}/jupiter-hw-support
     git clone https://gitlab.com/evlaV/jupiter-hw-support/ ${srcdir}/jupiter-hw-support
     rsync -a "$srcdir"/jupiter-hw-support/* "$pkgdir"
     cd $pkgdir/usr/share/steamos/
@@ -106,6 +106,19 @@ package() {
     chmod +x "${pkgdir}/usr/bin/jupiter-controller-update" 
     chmod +x "${pkgdir}/usr/bin/jupiter-biosupdate" 
     chmod +x "${pkgdir}/usr/bin/steamos-polkit-helpers/steamos-priv-write"
+    rm -rf ${srcdir}/jupiter-hw-support
+    ##
+
+    ## steamdeck-kde-presets
+    git clone https://gitlab.com/evlaV/steamdeck-kde-presets ${srcdir}/steamdeck-kde-presets
+    cp -R "$srcdir"/steamdeck-kde-presets/* "$pkgdir"
+        ## Nuke stuff that we don't REALLY need from Deck at all
+    rm -rf "${pkgdir}/etc/X11/Xsession.d/50rotate-screen"
+    rm -rf "${pkgdir}/etc/sddm.conf.d/"
+    rm -rf "${pkgdir}/usr/bin/jupiter-plasma-bootstrap"
+    cp "$srcdir"/50rotate-screen "${pkgdir}/etc/X11/Xsession.d/50rotate-screen"
+    chmod +x "${pkgdir}/etc/X11/Xsession.d/50rotate-screen"
+    rm -rf ${srcdir}/steamdeck-kde-presets
     ##
 }
 

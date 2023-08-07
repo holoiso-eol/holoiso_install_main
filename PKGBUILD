@@ -50,7 +50,7 @@ package() {
     cp "${srcdir}/osinfo" "${srcdir}/osinfo_tmp"
     cp "${srcdir}/pacman.conf" "${pkgdir}/etc/pacman.conf"
     cp "${srcdir}/stable_pacman.conf" "${pkgdir}/etc/stable_pacman.conf"
-    sed -i "s/snapshotver/snapshot$(date +%Y%m%d.%H%M)_preview/g" osinfo_tmp
+    sed -i "s/snapshotver/snapshot$(date +%Y%m%d.%H%M)/g" osinfo_tmp
     sed -i "s/versionver/4/g" osinfo_tmp
     sed -i "s/buildver/${holoiso_codename}/g" osinfo_tmp
     cp "${srcdir}/osinfo_tmp" "${pkgdir}/etc/os-release"

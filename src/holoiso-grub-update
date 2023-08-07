@@ -1,5 +1,10 @@
 #!/bin/zsh
 
+if [[ $EUID -ne 0 ]];
+then
+    exec pkexec --disable-internal-agent "$0" "$@"
+fi
+
 # See if Pacman saved the new config
 CONFIG_NEW=$(cat /etc/default/grub.pacnew)
 if [ -f "${CONFIG_NEW}" ]; then

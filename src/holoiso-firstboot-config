@@ -1,6 +1,11 @@
 #!/bin/zsh
 # Should be ran everytime user logs into desktop
 
+if [[ $EUID -ne 0 ]];
+then
+    exec pkexec --disable-internal-agent "$0" "$@"
+fi
+
 # Remove shortcuts to be safe
 sudo rm /home/$USER/Desktop/steamos-gamemode.desktop
 

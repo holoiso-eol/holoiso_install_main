@@ -57,33 +57,19 @@ package() {
     rm "${srcdir}/osinfo_tmp"
     cp "${srcdir}/holoiso-branch" "${pkgdir}/etc/holoiso-branch"
     ##
-
-    ## Legacy leftovers
-    cp "${srcdir}/99-oxpgamepad.rules" "${pkgdir}/etc/udev/rules.d/99-oxpgamepad.rules"
-    ##
-
-    cp "${srcdir}/holoiso-reboot-tracker.service" "${pkgdir}/usr/lib/systemd/system/holoiso-reboot-tracker.service"       
+   
     cp "${srcdir}/steamos-session-select" "${pkgdir}/usr/bin/steamos-session-select"
-    cp "${srcdir}/holoiso-gamescope-power" "${pkgdir}/usr/bin/holoiso-gamescope-power"
-    cp "${srcdir}/holoiso-reboot-tracker" "${pkgdir}/usr/bin/holoiso-reboot-tracker"
     cp "${srcdir}/steamos-select-branch" "${pkgdir}/usr/bin/steamos-select-branch"
     cp "${srcdir}/holoiso-disable-sessions" "${pkgdir}/usr/bin/holoiso-disable-sessions"  
     cp "${srcdir}/holoiso-enable-sessions" "${pkgdir}/usr/bin/holoiso-enable-sessions"          
     cp "${srcdir}/steamos-gamemode.desktop" "${pkgdir}/etc/skel/Desktop/steamos-gamemode.desktop"
-    cp "${srcdir}/desktopshortcuts.desktop" "${pkgdir}/etc/xdg/autostart/desktopshortcuts.desktop"
-    cp "${srcdir}/holoiso-firstboot-config" "${pkgdir}/usr/bin/holoiso-firstboot-config"
     cp "${srcdir}/holoiso-grub-update" "${pkgdir}/usr/bin/holoiso-grub-update"
     cp -r "${srcdir}/logind.conf.d/" "${pkgdir}/etc/systemd/"
     chmod +x "${pkgdir}/usr/bin/steamos-session-select"  
-    chmod +x "${pkgdir}/usr/bin/holoiso-reboot-tracker" 
-    chmod +x "${pkgdir}/usr/bin/holoiso-gamescope-power"
     chmod +x "${pkgdir}/usr/bin/holoiso-disable-sessions"
     chmod +x "${pkgdir}/usr/bin/steamos-select-branch"
     chmod +x "${pkgdir}/usr/bin/holoiso-enable-sessions"
     chmod +x "${pkgdir}/etc/skel/Desktop/steamos-gamemode.desktop"
-    chmod +x "${pkgdir}/etc/xdg/autostart/desktopshortcuts.desktop"
-    chmod +x "${pkgdir}/usr/bin/holoiso-firstboot-config"
-    chmod 0644 "${pkgdir}/usr/lib/systemd/system/holoiso-reboot-tracker.service"
     chmod +x "${pkgdir}/usr/bin/holoiso-grub-update"
     echo "Release output:"
     cat "${pkgdir}/etc/os-release"
@@ -118,6 +104,7 @@ package() {
     rm -rf "${pkgdir}/usr/bin/jupiter-plasma-bootstrap"
     cp "$srcdir"/50rotate-screen "${pkgdir}/etc/X11/Xsession.d/50rotate-screen"
     chmod +x "${pkgdir}/etc/X11/Xsession.d/50rotate-screen"
+    chmod 0644 "${pkgdir}/usr/share/polkit-1/actions/org.jittleyang.deeznuts.policy"
     rm -rf ${srcdir}/steamdeck-kde-presets
     ##
 }

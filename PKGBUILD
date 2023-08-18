@@ -3,7 +3,7 @@ pkgver="snapshot$(date +%Y%m%d.%H%M)"
 pkgdesc="HoloISO OS Image version 4"
 pkgrel="1"
 install=holo.install
-depends=('archlinux-keyring' 'ark' 'cheese' 'cups' 'curl' 'dolphin' 'ffmpegthumbs' 'gamescope' 'git' 'glxinfo' 'go' 'gwenview' 'hunspell' 'hunspell-en_us' 'holo-wireplumber' 'kdegraphics-thumbnailers' 'konsole' 'kwrite' 'lib32-pipewire' 'lib32-pipewire-jack' 'lib32-pipewire-v4l2' 'libva' 'lib32-libva' 'libva-utils' 'libva-mesa-driver' 'libva-intel-driver' 'lib32-libva-mesa-driver' 'lib32-libva-intel-driver' 'lib32-vulkan-radeon' 'lib32-vulkan-intel' 'mangohud' 'mesa' 'lib32-mesa' 'holoiso-updateclient' 'noto-fonts-cjk' 'pipewire' 'pipewire-alsa' 'pipewire-jack' 'wireplumber' 'pipewire-pulse' 'pipewire-v4l2' 'plasma-meta' 'plasma-nm' 'print-manager' 'spectacle' 'steam-jupiter-stable' 'tar' 'ufw' 'vlc' 'vulkan-intel' 'vulkan-radeon' 'wget' 'zsh' 'xbindkeys' 'steam-im-modules' 'systemd-swap' 'ttf-twemoji-default' 'ttf-hack' 'ttf-dejavu' 'pkgconf' 'pavucontrol' 'partitionmanager' 'gamemode' 'lib32-gamemode' 'bluez-plugins' 'bluez-utils' 'xf86-video-amdgpu' 'xf86-video-intel' 'python-evdev'
+depends=('archlinux-keyring' 'ark' 'cheese' 'cups' 'curl' 'dolphin' 'ffmpegthumbs' 'gamescope-holoiso' 'git' 'glxinfo' 'go' 'gwenview' 'hunspell' 'hunspell-en_us' 'holo-wireplumber' 'kdegraphics-thumbnailers' 'konsole' 'kwrite' 'lib32-pipewire' 'lib32-pipewire-jack' 'lib32-pipewire-v4l2' 'libva' 'lib32-libva' 'libva-utils' 'libva-mesa-driver' 'libva-intel-driver' 'lib32-libva-mesa-driver' 'lib32-libva-intel-driver' 'lib32-vulkan-radeon' 'lib32-vulkan-intel' 'mangohud' 'mesa' 'lib32-mesa' 'holoiso-updateclient' 'noto-fonts-cjk' 'pipewire' 'pipewire-alsa' 'pipewire-jack' 'wireplumber' 'pipewire-pulse' 'pipewire-v4l2' 'plasma-meta' 'plasma-nm' 'print-manager' 'spectacle' 'steam-jupiter-stable' 'tar' 'ufw' 'vlc' 'vulkan-intel' 'vulkan-radeon' 'wget' 'zsh' 'xbindkeys' 'steam-im-modules' 'systemd-swap' 'ttf-twemoji-default' 'ttf-hack' 'ttf-dejavu' 'pkgconf' 'pavucontrol' 'partitionmanager' 'gamemode' 'lib32-gamemode' 'bluez-plugins' 'bluez-utils' 'xf86-video-amdgpu' 'xf86-video-intel' 'python-evdev'
          'dmidecode' # for jupiter-biosupdate
          'python-crcmod' 'python-click' 'python-progressbar' 'python-hid'
          'jq' # for jupiter-controller-update, jupiter-biosupdate
@@ -93,19 +93,24 @@ package() {
     chmod +x "${pkgdir}/usr/bin/jupiter-biosupdate" 
     chmod +x "${pkgdir}/usr/bin/steamos-polkit-helpers/steamos-priv-write"
     rm -rf ${srcdir}/jupiter-hw-support
+    rm -rf "${pkgdir}/usr/lib/udev/rules.d/99-steamos-automount.rules"
     ##
 
     ## steamdeck-kde-presets
     git clone https://gitlab.com/evlaV/steamdeck-kde-presets ${srcdir}/steamdeck-kde-presets
     cp -R "$srcdir"/steamdeck-kde-presets/* "$pkgdir"
         ## Nuke stuff that we don't REALLY need from Deck at all
-    rm -rf "${pkgdir}/etc/X11/Xsession.d/50rotate-screen"
-    rm -rf "${pkgdir}/etc/sddm.conf.d/"
-    rm -rf "${pkgdir}/usr/bin/jupiter-plasma-bootstrap"
+        rm -rf "${pkgdir}/etc/X11/Xsession.d/50rotate-screen"
+        rm -rf "${pkgdir}/etc/sddm.conf.d/"
+        rm -rf "${pkgdir}/usr/bin/jupiter-plasma-bootstrap"
     cp "$srcdir"/50rotate-screen "${pkgdir}/etc/X11/Xsession.d/50rotate-screen"
     chmod +x "${pkgdir}/etc/X11/Xsession.d/50rotate-screen"
     chmod 0644 "${pkgdir}/usr/share/polkit-1/actions/org.jittleyang.deeznuts.policy"
     rm -rf ${srcdir}/steamdeck-kde-presets
     ##
+
+    ## Device shit
+    cp "$srcdir"/holoiso-devicequirk-set "${pkgdir}/usr/bin/holoiso-devicequirk-set"
+    chmod +x "${pkgdir}/usr/bin/holoiso-devicequirk-set"
 }
 

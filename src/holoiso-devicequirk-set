@@ -1,0 +1,37 @@
+#!/bin/bash
+
+DEVICENAME=$(cat /sys/devices/virtual/dmi/id/product_name)
+# OXP Devices
+OXP_LIST="ONE XPLAYER:ONEXPLAYER 1 T08:ONEXPLAYER 1S A08:ONEXPLAYER 1S T08:ONEXPLAYER mini A07:ONEXPLAYER mini GA72:ONEXPLAYER mini GT72:ONEXPLAYER GUNDAM GA72:ONEXPLAYER 2 ARP23:ONEXPLAYER Mini Pro"
+# AYANEO AIR Devices
+AIR_LIST="AIR:AIR Pro"
+# AYANEO Gen 1 Devices
+AYA_LIST="NEXT:NEXT Pro:NEXT Advance:AYANEO NEXT:AYANEO NEXT Pro:AYANEO NEXT Advance:AYA NEO Fouder:AYA NEO 2021:AYANEO 2021:AYANEO 2021 Pro:AYANEO 2021 Pro:AYANEO 2021 Pro Retro Power"
+# AOKZOE Devices
+AOK_LIST="AOKZOE A1 AR07"
+# GPD Devices
+GPD_LIST="G1619-04"
+
+# Rotate screens here
+if [ "${DEVICENAME}" == "Win600" ] || [ "${DEVICENAME}" == "Anbernic Win600" ]; then
+    export HOLOISO_X11_ROTATION=right
+    export HOLOISO_DEVICE_TYPE="Win600"
+elif [ "${DEVICENAME}" == "Jupiter 1" ] || [ "${DEVICENAME}" == "Valve Jupiter 1" ]; then
+    export HOLOISO_X11_ROTATION=right
+    export HOLOISO_DEVICE_TYPE="SteamDeck"
+elif [[ ":$OXP_LIST:" =~ ":$DEVICENAME:"  ]]; then
+    export HOLOISO_X11_ROTATION=left
+    export HOLOISO_GAMESCOPE_ADDITIONAL_OPTIONS="--force-orientation left"
+    export HOLOISO_DEVICE_TYPE="OneXPlayer"
+elif [[ ":$AYA_LIST:" =~ ":$DEVICENAME:"  ]]; then
+    export HOLOISO_X11_ROTATION=left
+    export HOLOISO_DEVICE_TYPE="AyaNeoG1"
+elif [[ ":$AIR_LIST:" =~ ":$DEVICENAME:"  ]]; then
+    export HOLOISO_X11_ROTATION=left
+    export HOLOISO_GAMESCOPE_ADDITIONAL_OPTIONS="--force-orientation left"
+    export HOLOISO_DEVICE_TYPE="AyaNeo22Plus"
+elif [[ ":$AOK_LIST:" =~ ":$DEVICENAME:"  ]]; then
+    export HOLOISO_X11_ROTATION=left
+    export HOLOISO_GAMESCOPE_ADDITIONAL_OPTIONS="--force-orientation left"
+    export HOLOISO_DEVICE_TYPE="BrokeAssOneXPlayer"
+fi

@@ -1,29 +1,9 @@
-#!/bin/sh
-
-set -e
-
-# Rotate the builtin screen every time so it's the right way around.
-DEVICENAME=$(cat /sys/devices/virtual/dmi/id/product_name)
+#!/bin/bash
 INT_DISPLAY=$(xrandr | awk '/\<connected\>/ {print $1}' | grep eDP | head -n1)
+source holoiso-devicequirk-set
 
-# OXP Devices
-OXP_LIST="ONE XPLAYER:ONEXPLAYER 1 T08:ONEXPLAYER 1S A08:ONEXPLAYER 1S T08:ONEXPLAYER mini A07:ONEXPLAYER mini GA72:ONEXPLAYER mini GT72:ONEXPLAYER GUNDAM GA72:ONEXPLAYER 2 ARP23:ONEXPLAYER Mini Pro"
-
-# AYANEO AIR Devices
-AIR_LIST="AIR:AIR Pro"
-
-# AOKZOE Devices
-AOK_LIST="AOKZOE A1 AR07"
-
-# Rotate screens here
-if [ "${DEVICENAME}" == "Win600" ] || [ "${DEVICENAME}" == "Anbernic Win600" ]; then
-    xrandr --output ${INT_DISPLAY} --rotate right
-elif [ "${DEVICENAME}" == "Jupiter 1" ] || [ "${DEVICENAME}" == "Valve Jupiter 1" ]; then
-    xrandr --output ${INT_DISPLAY} --rotate right
-elif [[ ":$OXP_LIST:" =~ ":$DEVICENAME:"  ]]; then
-    xrandr --output ${INT_DISPLAY} --rotate left
-elif [[ ":$AIR_LIST:" =~ ":$DEVICENAME:"  ]]; then
-    xrandr --output ${INT_DISPLAY} --rotate left
-elif [[ ":$AOK_LIST:" =~ ":$DEVICENAME:"  ]]; then
-    xrandr --output ${INT_DISPLAY} --rotate left
+if [ -z "$HOLOISO_X11_ROTATION" ]; then
+    echo "Ignoring anything. Assume normal rotation"
+else
+    xrandr --output ${INT_DISPLAY} --rotate $HOLOISO_X11_ROTATION
 fi

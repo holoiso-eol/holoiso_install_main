@@ -15,23 +15,42 @@ GPD_LIST="G1619-04"
 # Rotate screens here
 if [ "${DEVICENAME}" == "Win600" ] || [ "${DEVICENAME}" == "Anbernic Win600" ]; then
     export HOLOISO_X11_ROTATION=right
+    export HOLOISO_GAMESCOPE_RES="-w 1280 -h 720"
     export HOLOISO_DEVICE_TYPE="Win600"
 elif [ "${DEVICENAME}" == "Jupiter 1" ] || [ "${DEVICENAME}" == "Valve Jupiter 1" ]; then
+    export HOLOISO_GAMESCOPE_RES="-w 1280 -h 800"
     export HOLOISO_X11_ROTATION=right
     export HOLOISO_DEVICE_TYPE="SteamDeck"
 elif [[ ":$OXP_LIST:" =~ ":$DEVICENAME:"  ]]; then
     export HOLOISO_X11_ROTATION=left
     export HOLOISO_GAMESCOPE_ADDITIONAL_OPTIONS="--force-orientation left"
+    export HOLOISO_GAMESCOPE_RES="-w 1280 -h 800"
     export HOLOISO_DEVICE_TYPE="OneXPlayer"
 elif [[ ":$AYA_LIST:" =~ ":$DEVICENAME:"  ]]; then
     export HOLOISO_X11_ROTATION=left
+    export HOLOISO_GAMESCOPE_RES="-w 1280 -h 800"
     export HOLOISO_DEVICE_TYPE="AyaNeoG1"
 elif [[ ":$AIR_LIST:" =~ ":$DEVICENAME:"  ]]; then
     export HOLOISO_X11_ROTATION=left
+    export HOLOISO_GAMESCOPE_RES="-w 1280 -h 720"
     export HOLOISO_GAMESCOPE_ADDITIONAL_OPTIONS="--force-orientation left"
     export HOLOISO_DEVICE_TYPE="AyaNeo22Plus"
 elif [[ ":$AOK_LIST:" =~ ":$DEVICENAME:"  ]]; then
     export HOLOISO_X11_ROTATION=left
+    export HOLOISO_GAMESCOPE_RES="-w 1280 -h 800"
     export HOLOISO_GAMESCOPE_ADDITIONAL_OPTIONS="--force-orientation left"
     export HOLOISO_DEVICE_TYPE="BrokeAssOneXPlayer"
+fi
+
+# Set required properties if they are empty
+if [[ -z "$HOLOISO_DEVICE_TYPE" ]]; then
+    if [[ -f "/usr/lib/holoiso-hwsupport/devicequirks/$(cat /sys/devices/virtual/dmi/id/product_name | tr -d '[:space:]').sh" ]]; then
+        source /usr/lib/holoiso-hwsupport/devicequirks/$(cat /sys/devices/virtual/dmi/id/product_name | tr -d '[:space:]').sh
+    else
+        echo "Skipping any device quirks, as device-specific quirks weren't set."
+    fi
+fi
+
+if [[ -z "$HOLOISO_GAMESCOPE_RES" ]]; then
+    export HOLOISO_GAMESCOPE_RES="-w 1280 -h 720"
 fi

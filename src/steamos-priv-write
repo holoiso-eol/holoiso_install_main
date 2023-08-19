@@ -30,23 +30,51 @@ if [[ "$WRITE_PATH" == /sys/class/backlight/*/brightness ]]; then
    CommitWrite
 fi
 
-
+if [ "$(cat /sys/devices/virtual/dmi/id/product_name)" == "Jupiter 1" ]; then
 if [[ "$WRITE_PATH" == /sys/class/drm/card*/device/power_dpm_force_performance_level ]]; then
-   echo "decline harder: $WRITE_VALUE -> $WRITE_PATH" | systemd-cat -t p-steamos-priv-write -p err
-   # return 0=success so steam does not try to fix it...
-   exit 0
+   CommitWrite
 fi
 
 if [[ "$WRITE_PATH" == /sys/class/drm/card*/device/pp_od_clk_voltage ]]; then
-   echo "decline harder: $WRITE_VALUE -> $WRITE_PATH" | systemd-cat -t p-steamos-priv-write -p err
-   # return 0=success so steam does not try to fix it...
-   exit 0
+   CommitWrite
+fi
+
+if [[ "$WRITE_PATH" == /sys/class/hwmon/hwmon*/power*_cap ]]; then
+   CommitWrite
+fi
+else
+    if [[ "$WRITE_PATH" == /sys/class/drm/card*/device/power_dpm_force_performance_level ]]; then
+       echo "decline harder: $WRITE_VALUE -> $WRITE_PATH" | systemd-cat -t p-steamos-priv-write -p err
+       # return 0=success so steam does not try to fix it...
+       exit 0
+    fi
+
+    if [[ "$WRITE_PATH" == /sys/class/drm/card*/device/pp_od_clk_voltage ]]; then
+       if [[ "$WRITE_VALUE" == "c" ]]; then
+            echo "HoloISO SetStatus: $WRITE_VALUE -> $WRITE_PATH" | systemd-cat -t p-steamos-priv-write -p err
+       # return 0=success so steam does not try to fix it...
+       exit 0
+    fi
+   if [[ "$(echo $WRITE_VALUE | cut -d ' ' -f 3)" -lt "500"  ]]; then
+        echo "low" > /sys/class/drm/card*/device/power_dpm_force_performance_level
+        echo "HoloISO Write LowGPU: $WRITE_VALUE -> $WRITE_PATH" | systemd-cat -t p-steamos-priv-write -p err
+        exit 0
+   elif [[ "$(echo $WRITE_VALUE | cut -d ' ' -f 3)" -ge "500"  ]] && [[ "$(echo $WRITE_VALUE | cut -d ' ' -f 3)" -le "1100"  ]]; then
+        echo "auto" > /sys/class/drm/card*/device/power_dpm_force_performance_level
+        echo "HoloISO Write MidGPU: $WRITE_VALUE -> $WRITE_PATH" | systemd-cat -t p-steamos-priv-write -p err
+        exit 0
+   elif [[ "$(echo $WRITE_VALUE | cut -d ' ' -f 3)" -gt "1100"  ]]; then
+        echo "profile_peak" > /sys/class/drm/card*/device/power_dpm_force_performance_level
+        echo "HoloISO Write MaxGPU: $WRITE_VALUE -> $WRITE_PATH" | systemd-cat -t p-steamos-priv-write -p err
+        exit 0
+   fi
 fi
 
 if [[ "$WRITE_PATH" == /sys/class/hwmon/hwmon*/power*_cap ]]; then
    echo "decline harder: $WRITE_VALUE -> $WRITE_PATH" | systemd-cat -t p-steamos-priv-write -p err
    # return 0=success so steam does not try to fix it...
    exit 0
+fi
 fi
 
 if [[ "$WRITE_PATH" == /sys/devices/platform/*/*/*/iio:device*/in_illuminance_integration_time ]]; then

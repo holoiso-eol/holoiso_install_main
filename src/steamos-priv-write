@@ -64,7 +64,7 @@ else
         echo "HoloISO Write MidGPU: $WRITE_VALUE -> $WRITE_PATH" | systemd-cat -t p-steamos-priv-write -p err
         exit 0
    elif [[ "$(echo $WRITE_VALUE | cut -d ' ' -f 3)" -gt "1100"  ]]; then
-        echo "profile_peak" > /sys/class/drm/card*/device/power_dpm_force_performance_level
+        echo "high" > /sys/class/drm/card*/device/power_dpm_force_performance_level
         echo "HoloISO Write MaxGPU: $WRITE_VALUE -> $WRITE_PATH" | systemd-cat -t p-steamos-priv-write -p err
         exit 0
    fi

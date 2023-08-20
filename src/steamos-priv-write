@@ -71,9 +71,19 @@ else
 fi
 
 if [[ "$WRITE_PATH" == /sys/class/hwmon/hwmon*/power*_cap ]]; then
-   echo "decline harder: $WRITE_VALUE -> $WRITE_PATH" | systemd-cat -t p-steamos-priv-write -p err
-   # return 0=success so steam does not try to fix it...
-   exit 0
+        if [[ "$(echo $WRITE_VALUE | cut -d ' ' -f 3)" -lt "5000000"  ]]; then
+                cpupower frequency-set -g powersave
+                echo "HoloISO Write LowCPUPower: $WRITE_VALUE -> $WRITE_PATH" | systemd-cat -t p-steamos-priv-write -p err
+                exit 0
+        elif [[ "$(echo $WRITE_VALUE | cut -d ' ' -f 3)" -ge "5000000"  ]] && [[ "$(echo $WRITE_VALUE | cut -d ' ' -f 3)" -le "9000000"  ]]; then
+                cpupower frequency-set -g ondemand
+                echo "HoloISO Write AutoCPUPower: $WRITE_VALUE -> $WRITE_PATH" | systemd-cat -t p-steamos-priv-write -p err
+                exit 0
+        elif [[ "$(echo $WRITE_VALUE | cut -d ' ' -f 3)" -gt "9000000"  ]]; then
+                cpupower frequency-set -g performance
+                echo "HoloISO Write HighCPUPower: $WRITE_VALUE -> $WRITE_PATH" | systemd-cat -t p-steamos-priv-write -p err
+                exit 0
+        fi
 fi
 fi
 

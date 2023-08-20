@@ -111,6 +111,8 @@ package() {
 
     ## Device shit
     cp "$srcdir"/holoiso-devicequirk-set "${pkgdir}/usr/bin/holoiso-devicequirk-set"
+    cp "$srcdir"/holoiso-devicequirk-generator "${pkgdir}/usr/bin/genquirks"
     chmod +x "${pkgdir}/usr/bin/holoiso-devicequirk-set"
+    chmod +x "${pkgdir}/usr/bin/genquirks"
 }
 

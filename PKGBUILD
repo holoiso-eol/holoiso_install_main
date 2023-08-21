@@ -65,6 +65,7 @@ package() {
     cp "${srcdir}/steamos-gamemode.desktop" "${pkgdir}/etc/skel/Desktop/steamos-gamemode.desktop"
     cp "${srcdir}/holoiso-grub-update" "${pkgdir}/usr/bin/holoiso-grub-update"
     cp -r "${srcdir}/logind.conf.d/" "${pkgdir}/etc/systemd/"
+    cp "${srcdir}/99-dualshock-dualsense.rules" "${pkgdir}/etc/udev/rules.d/99-dualshock-dualsense.rules"
     chmod +x "${pkgdir}/usr/bin/steamos-session-select"  
     chmod +x "${pkgdir}/usr/bin/holoiso-disable-sessions"
     chmod +x "${pkgdir}/usr/bin/steamos-select-branch"

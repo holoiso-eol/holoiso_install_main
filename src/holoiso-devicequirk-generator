@@ -13,7 +13,7 @@ case $key in
     --gamescope_rotation)
     OPTIONS_GR="left:right:normal:upsidedown"
     if [[ ":$OPTIONS_GR:" =~ ":$2:"  ]]; then
-        GAMESCOPE_ORIENTATION="--force-orientation $2"
+        GAMESCOPE_ORIENTATION="--force-panel-type external --force-external-orientation $2"
     else
         echo "Unrecognized value for Gamescope orientation Usage: \"left:right:normal:upsidedown\""
         exit 0

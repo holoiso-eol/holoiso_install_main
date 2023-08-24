@@ -30,7 +30,7 @@ if [[ "$WRITE_PATH" == /sys/class/backlight/*/brightness ]]; then
    CommitWrite
 fi
 
-if [ "$(cat /sys/devices/virtual/dmi/id/product_name)" == "Jupiter 1" ]; then
+if [[ "$(cat /sys/devices/virtual/dmi/id/product_name)" =~ "Jupiter" ]]; then
 if [[ "$WRITE_PATH" == /sys/class/drm/card*/device/power_dpm_force_performance_level ]]; then
    CommitWrite
 fi

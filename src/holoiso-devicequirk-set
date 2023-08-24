@@ -18,7 +18,7 @@ if [ "${DEVICENAME}" == "Win600" ] || [ "${DEVICENAME}" == "Anbernic Win600" ]; 
     export HOLOISO_GAMESCOPE_RES="-w 1280 -h 720"
     export HOLOISO_GAMESCOPE_ADDITIONAL_OPTIONS="--force-panel-type external --force-external-orientation right"
     export HOLOISO_DEVICE_TYPE="Win600"
-elif [ "${DEVICENAME}" == "Jupiter 1" ] || [ "${DEVICENAME}" == "Valve Jupiter 1" ]; then
+elif [[ "${DEVICENAME}" =~ "Jupiter" ]]; then
     export HOLOISO_GAMESCOPE_RES="-w 1280 -h 800"
     export HOLOISO_X11_ROTATION=right
     export HOLOISO_DEVICE_TYPE="SteamDeck"

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-if [ "$(cat /sys/devices/virtual/dmi/id/product_name)" == "Jupiter 1" ]; then
+if [[ "$(cat /sys/devices/virtual/dmi/id/product_name)" =~ "Jupiter" ]]; then
     # If found, and --no-beta wasn't explicitly passed, use beta mode.  Set by e.g. foxnet.
     BIOS_BETA_FILE=/run/jupiter-bios-use-beta
 

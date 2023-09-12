@@ -63,8 +63,8 @@ if [[ -z "$GAMESCOPE_ORIENTATION" ]] && [[ -z "$GAMESCOPE_RESOLUTION" ]] && [[ -
     exit 0
 fi
 
-mkdir -p /usr/lib/holoiso-hwsupport/devicequirks/
-QUIRKPATH="/usr/lib/holoiso-hwsupport/devicequirks/${HWID}.sh"
+mkdir -p /usr/lib/holoiso-hwsupport/customdevicequirks/
+QUIRKPATH="/usr/lib/holoiso-hwsupport/customdevicequirks/${HWID}.sh"
 echo -e '#!/bin/bash' > $QUIRKPATH
 echo -e "#HoloISO Quirkfile for $HWID\n" >> $QUIRKPATH
 

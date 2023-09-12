@@ -1,53 +1,19 @@
 #!/bin/bash
 
 DEVICENAME=$(cat /sys/devices/virtual/dmi/id/product_name)
-# OXP Devices
-OXP_LIST="ONE XPLAYER:ONEXPLAYER 1 T08:ONEXPLAYER 1S A08:ONEXPLAYER 1S T08:ONEXPLAYER mini A07:ONEXPLAYER mini GA72:ONEXPLAYER mini GT72:ONEXPLAYER GUNDAM GA72:ONEXPLAYER 2 ARP23:ONEXPLAYER Mini Pro"
-# AYANEO AIR Devices
-AIR_LIST="AIR:AIR Pro"
-# AYANEO Gen 1 Devices
-AYA_LIST="NEXT:NEXT Pro:NEXT Advance:AYANEO NEXT:AYANEO NEXT Pro:AYANEO NEXT Advance:AYA NEO Fouder:AYA NEO 2021:AYANEO 2021:AYANEO 2021 Pro:AYANEO 2021 Pro:AYANEO 2021 Pro Retro Power"
-# AOKZOE Devices
-AOK_LIST="AOKZOE A1 AR07"
-# GPD Devices
-GPD_LIST="G1619-04"
 
-# Rotate screens here
-if [ "${DEVICENAME}" == "Win600" ] || [ "${DEVICENAME}" == "Anbernic Win600" ]; then
-    export HOLOISO_X11_ROTATION=right
-    export HOLOISO_GAMESCOPE_RES="-w 1280 -h 720"
-    export HOLOISO_GAMESCOPE_ADDITIONAL_OPTIONS="--force-panel-type external --force-external-orientation right"
-    export HOLOISO_DEVICE_TYPE="Win600"
-elif [[ "${DEVICENAME}" =~ "Jupiter" ]]; then
+if [[ "${DEVICENAME}" =~ "Jupiter" ]]; then
     export HOLOISO_GAMESCOPE_RES="-w 1280 -h 800"
     export HOLOISO_X11_ROTATION=right
     export HOLOISO_DEVICE_TYPE="SteamDeck"
-elif [[ ":$OXP_LIST:" =~ ":$DEVICENAME:"  ]]; then
-    export HOLOISO_X11_ROTATION=left
-    export HOLOISO_GAMESCOPE_ADDITIONAL_OPTIONS="--force-panel-type external --force-external-orientation left"
-    export HOLOISO_GAMESCOPE_RES="-w 1280 -h 800"
-    export HOLOISO_DEVICE_TYPE="OneXPlayer"
-elif [[ ":$AYA_LIST:" =~ ":$DEVICENAME:"  ]]; then
-    export HOLOISO_X11_ROTATION=left
-    export HOLOISO_GAMESCOPE_RES="-w 1280 -h 800"
-    export HOLOISO_GAMESCOPE_ADDITIONAL_OPTIONS="--force-panel-type external --force-external-orientation right"
-    export HOLOISO_DEVICE_TYPE="AyaNeoG1"
-elif [[ ":$AIR_LIST:" =~ ":$DEVICENAME:"  ]]; then
-    export HOLOISO_X11_ROTATION=left
-    export HOLOISO_GAMESCOPE_RES="-w 1280 -h 720"
-    export HOLOISO_GAMESCOPE_ADDITIONAL_OPTIONS="--force-panel-type external --force-external-orientation left"
-    export HOLOISO_DEVICE_TYPE="AyaNeo22Plus"
-elif [[ ":$AOK_LIST:" =~ ":$DEVICENAME:"  ]]; then
-    export HOLOISO_X11_ROTATION=left
-    export HOLOISO_GAMESCOPE_RES="-w 1280 -h 800"
-    export HOLOISO_GAMESCOPE_ADDITIONAL_OPTIONS="--force-panel-type external --force-external-orientation left"
-    export HOLOISO_DEVICE_TYPE="BrokeAssOneXPlayer"
 fi
 
 # Set required properties if they are empty
 if [[ -z "$HOLOISO_DEVICE_TYPE" ]]; then
-    if [[ -f "/usr/lib/holoiso-hwsupport/devicequirks/$(cat /sys/devices/virtual/dmi/id/product_name | tr -d '[:space:]').sh" ]]; then
-        source /usr/lib/holoiso-hwsupport/devicequirks/$(cat /sys/devices/virtual/dmi/id/product_name | tr -d '[:space:]').sh
+    if [[ -f "/usr/lib/holoiso-hwsupport/him_devicequirks/$(cat /sys/devices/virtual/dmi/id/product_name | tr -d '[:space:]').sh" ]]; then
+        source /usr/lib/holoiso-hwsupport/him_devicequirks/$(cat /sys/devices/virtual/dmi/id/product_name | tr -d '[:space:]').sh
+    elif [[ -f "/usr/lib/holoiso-hwsupport/customdevicequirks/$(cat /sys/devices/virtual/dmi/id/product_name | tr -d '[:space:]').sh" ]]; then
+        source /usr/lib/holoiso-hwsupport/customdevicequirks/$(cat /sys/devices/virtual/dmi/id/product_name | tr -d '[:space:]').sh
     else
         echo "Skipping any device quirks, as device-specific quirks weren't set."
     fi

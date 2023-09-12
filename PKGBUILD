@@ -115,5 +115,6 @@ package() {
     cp "$srcdir"/holoiso-devicequirk-generator "${pkgdir}/usr/bin/genquirks"
     chmod +x "${pkgdir}/usr/bin/holoiso-devicequirk-set"
     chmod +x "${pkgdir}/usr/bin/genquirks"
+    git clone https://github.com/HoloISO/him_devicequirks "${pkgdir}/usr/lib/holoiso-hwsupport/"
 }
 

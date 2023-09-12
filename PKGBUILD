@@ -16,7 +16,6 @@ arch=("x86_64")
 
 package() {
     holoiso_codename="Image ($(echo $RANDOM | md5sum | head -c 10; echo;))"
-
     ## steamos-customizations and jupiter-legacy-support
     cp -r "${srcdir}/new_steamos_dirs/etc" "${pkgdir}"
     cp -r "${srcdir}/new_steamos_dirs/usr" "${pkgdir}"
@@ -93,7 +92,6 @@ package() {
     chmod +x "${pkgdir}/usr/bin/jupiter-controller-update" 
     chmod +x "${pkgdir}/usr/bin/jupiter-biosupdate" 
     chmod +x "${pkgdir}/usr/bin/steamos-polkit-helpers/steamos-priv-write"
-    rm -rf ${srcdir}/jupiter-hw-support
     rm -rf "${pkgdir}/usr/lib/udev/rules.d/99-steamos-automount.rules"
     ##
 
@@ -107,7 +105,6 @@ package() {
     cp "$srcdir"/50rotate-screen "${pkgdir}/etc/X11/Xsession.d/50rotate-screen"
     chmod +x "${pkgdir}/etc/X11/Xsession.d/50rotate-screen"
     chmod 0644 "${pkgdir}/usr/share/polkit-1/actions/org.jittleyang.deeznuts.policy"
-    rm -rf ${srcdir}/steamdeck-kde-presets
     ##
 
     ## Device shit
@@ -115,6 +112,9 @@ package() {
     cp "$srcdir"/holoiso-devicequirk-generator "${pkgdir}/usr/bin/genquirks"
     chmod +x "${pkgdir}/usr/bin/holoiso-devicequirk-set"
     chmod +x "${pkgdir}/usr/bin/genquirks"
-    git clone https://github.com/HoloISO/him_devicequirks "${pkgdir}/usr/lib/holoiso-hwsupport/"
+    git clone https://github.com/HoloISO/him_devicequirks "${pkgdir}/usr/lib/holoiso-hwsupport/him_devicequirks"
+    echo "Cleaning up..."
+    rm -rf ${srcdir}/jupiter-hw-support
+    rm -rf ${srcdir}/steamdeck-kde-presets
 }
 

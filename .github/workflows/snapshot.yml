@@ -26,5 +26,5 @@ jobs:
           
       - uses: actions/upload-artifact@v2
         with:
-          name: holoiso-main-snapshot$(date +%Y%m%d.%H%M)-1-x86_64
-          path: pkgout/pkg/*
+          name: holoiso-main-snapshot$(date +%Y%m%d.%H%M)-1-x86_64_CI
+          path: pkg/*

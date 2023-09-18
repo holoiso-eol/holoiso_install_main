@@ -10,10 +10,10 @@ fi
 
 # Set required properties if they are empty
 if [[ -z "$HOLOISO_DEVICE_TYPE" ]]; then
-    if [[ -f "/usr/lib/holoiso-hwsupport/him_devicequirks/$(cat /sys/devices/virtual/dmi/id/product_name | tr -d '[:space:]').sh" ]]; then
-        source /usr/lib/holoiso-hwsupport/him_devicequirks/$(cat /sys/devices/virtual/dmi/id/product_name | tr -d '[:space:]').sh
-    elif [[ -f "/usr/lib/holoiso-hwsupport/customdevicequirks/$(cat /sys/devices/virtual/dmi/id/product_name | tr -d '[:space:]').sh" ]]; then
+    if [[ -f "/usr/lib/holoiso-hwsupport/customdevicequirks/$(cat /sys/devices/virtual/dmi/id/product_name | tr -d '[:space:]').sh" ]]; then
         source /usr/lib/holoiso-hwsupport/customdevicequirks/$(cat /sys/devices/virtual/dmi/id/product_name | tr -d '[:space:]').sh
+    elif [[ -f "/usr/lib/holoiso-hwsupport/him_devicequirks/$(cat /sys/devices/virtual/dmi/id/product_name | tr -d '[:space:]').sh" ]]; then
+        source /usr/lib/holoiso-hwsupport/him_devicequirks/$(cat /sys/devices/virtual/dmi/id/product_name | tr -d '[:space:]').sh    
     else
         echo "Skipping any device quirks, as device-specific quirks weren't set."
     fi

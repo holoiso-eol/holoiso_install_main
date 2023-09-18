@@ -116,5 +116,9 @@ package() {
     echo "Cleaning up..."
     rm -rf ${srcdir}/jupiter-hw-support
     rm -rf ${srcdir}/steamdeck-kde-presets
+
+    ## SteamOS update manifest for all available daemons
+    mkdir -p "${pkgdir}/etc/steamos-atomupd/"
+    cp "${srcdir}/maskedmanifest" "${pkgdir}/etc/steamos-atomupd/manifest.json"
 }
 

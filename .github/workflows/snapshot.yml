@@ -23,8 +23,12 @@ jobs:
       - name: Build Arch package
         run: |
           su -s /bin/bash nobody -c "makepkg -s --nodeps && mkdir pkgout && mv *.tar.zst pkgout"
+
+      - name: Set current version date
+        run: |
+          echo "VER=snapshot$(date +%Y%m%d.%H%M)-1-x86_64_CI" >> $GITHUB_ENV
           
       - uses: actions/upload-artifact@v2
         with:
-          name: holoiso-main-snapshot$(date +%Y%m%d.%H%M)-1-x86_64_CI
-          path: pkg/*
+          name: holoiso-main-${{ env.VER }}
+          path: pkg/holoiso-main/*

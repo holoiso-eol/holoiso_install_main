@@ -24,11 +24,12 @@ jobs:
         run: |
           su -s /bin/bash nobody -c "makepkg -s --nodeps && mkdir pkgout && mv *.tar.zst pkgout"
 
-      - name: Set current version date
+      - name: Set current package distribution variables
         run: |
-          echo "VER=snapshot$(date +%Y%m%d.%H%M)-1-x86_64_CI" >> $GITHUB_ENV
+          echo "PKGNAME=$(grep pkgname PKGBUILD | cut -d "=" -f 2)" >> $GITHUB_ENV
+          echo "VER=$(grep pkgname PKGBUILD | cut -d "=" -f 2)-snapshot$(date +%Y%m%d.%H%M)-1-x86_64_CI" >> $GITHUB_ENV
           
       - uses: actions/upload-artifact@v2
         with:
-          name: holoiso-main-${{ env.VER }}
-          path: pkg/holoiso-main/*
+          name: ${{ env.VER }}
+          path: pkg/${{ env.PKGNAME }}/*

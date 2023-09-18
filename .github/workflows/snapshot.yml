@@ -18,23 +18,13 @@ jobs:
           pacman --noconfirm -Sy archlinux-keyring base-devel fakeroot dos2unix wget
           find . -type f -print0 | xargs -0 dos2unix
           chown -R nobody:nobody .
+          pacman --noconfirm -S $(grep makedepends PKGBUILD | cut -d '=' -f 2 | sed 's/(//g' | sed 's/)//g' |tr -d \'\")
           
       - name: Build Arch package
         run: |
           su -s /bin/bash nobody -c "makepkg -s --nodeps && mkdir pkgout && mv *.tar.zst pkgout"
           
-      - name: Add to arch repository
-        run: |
-          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso-next/os/x86_64/holoiso-next.db -P pkgout"
-          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso-next/os/x86_64/holoiso-next.db.tar.gz -P pkgout"
-          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso-next/os/x86_64/holoiso-next.db.tar.gz.old -P pkgout"
-          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso-next/os/x86_64/holoiso-next.db.tar.xz -P pkgout"
-          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso-next/os/x86_64/holoiso-next.files -P pkgout"
-          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso-next/os/x86_64/holoiso-next.files.tar.gz -P pkgout"
-          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso-next/os/x86_64/holoiso-next.files.tar.gz.old -P pkgout"
-          su -s /bin/bash nobody -c "wget http://dlcdn2.thevakhovske.pw/holoiso-next/os/x86_64/holoiso-next.files.tar.xz -P pkgout"
-          su -s /bin/bash nobody -c "repo-add pkgout/holoiso-next.db.tar.gz pkgout/*.tar.zst"
       - uses: actions/upload-artifact@v2
         with:
-          name: package
-          path: pkgout/*
+          name: holoiso-main-snapshot$(date +%Y%m%d.%H%M)-1-x86_64
+          path: pkgout/pkg/*

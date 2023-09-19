@@ -116,9 +116,9 @@ package() {
     echo "Cleaning up..."
     rm -rf ${srcdir}/jupiter-hw-support
     rm -rf ${srcdir}/steamdeck-kde-presets
+    rf -rf "${pkgdir}/usr/lib/holoiso-hwsupport/him_devicequirks/.git*"
 
     ## SteamOS update manifest for all available daemons
     mkdir -p "${pkgdir}/etc/steamos-atomupd/"
     cp "${srcdir}/maskedmanifest" "${pkgdir}/etc/steamos-atomupd/manifest.json"
 }
-
